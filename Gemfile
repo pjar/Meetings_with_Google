@@ -11,7 +11,7 @@ gem 'haml-rails'
 
 gem 'rspec-rails'
 
-gem 'annotate-models'
+gem 'annotate', '2.4.0'
 
 gem 'gcal4ruby'
 
