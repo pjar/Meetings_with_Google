@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><component name="dataSourceStorage">
+  <data-source source="LOCAL" name="Rails Meetings_with_Google: development" product="" version="" jdbc-version="" driver-version="" uuid="2bde8769-3ae6-4c24-96d9-f9efe7501590">
+    <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+    <jdbc-url>jdbc:sqlite:/home/jarek-u1010/RubymineProjects/Meetings_with_Google/db/development.sqlite3</jdbc-url>
+    <libraries>
+      <library>
+        <url>file://$USER_HOME$/.RubyMine31/config/jdbc-drivers/sqlitejdbc-v056.jar</url>
+      </library>
+    </libraries>
+  </data-source>
+  <data-source source="LOCAL" name="Rails Meetings_with_Google: test" product="" version="" jdbc-version="" driver-version="" uuid="53b25e87-d58a-4621-858e-26ac3d7552b5">
+    <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+    <jdbc-url>jdbc:sqlite:/home/jarek-u1010/RubymineProjects/Meetings_with_Google/db/test.sqlite3</jdbc-url>
+    <libraries>
+      <library>
+        <url>file://$USER_HOME$/.RubyMine31/config/jdbc-drivers/sqlitejdbc-v056.jar</url>
+      </library>
+    </libraries>
+  </data-source>
+</component>
