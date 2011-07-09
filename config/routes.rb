@@ -1,4 +1,6 @@
 MeetingsWithGoogle::Application.routes.draw do
+  resources :meetings
+
   resources :users
 
   # The priority is based upon order of creation:
