@@ -24,7 +24,23 @@ describe MeetingsController do
   # Meeting. As you add validations to Meeting, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    {
+        :starts_at    =>  "2011-09-08 11:00",
+        :ends_at      =>  "2011-09-08 12:00",
+        :title        =>  "Spotkanie organizacyjne",
+        :description  =>  "Pierwsze spotkanie naszego zespolu",
+        :place        =>  "Sala konferencyjna",
+        :total_places =>  4
+    }
+  end
+
+  def valid_attributes_for_update
+    {
+        :title        =>  "Spotkanie organizacyjne",
+        :description  =>  "Pierwsze spotkanie naszego zespolu",
+        :place        =>  "Sala konferencyjna",
+        :total_places =>  4
+    }
   end
 
   describe "GET index" do
@@ -98,7 +114,7 @@ describe MeetingsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested meeting" do
-        meeting = Meeting.create! valid_attributes
+        meeting = Meeting.create! valid_attributes_for_update
         # Assuming there are no other meetings in the database, this
         # specifies that the Meeting created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -109,20 +125,20 @@ describe MeetingsController do
 
       it "assigns the requested meeting as @meeting" do
         meeting = Meeting.create! valid_attributes
-        put :update, :id => meeting.id, :meeting => valid_attributes
+        put :update, :id => meeting.id, :meeting => valid_attributes_for_update
         assigns(:meeting).should eq(meeting)
       end
 
       it "redirects to the meeting" do
         meeting = Meeting.create! valid_attributes
-        put :update, :id => meeting.id, :meeting => valid_attributes
+        put :update, :id => meeting.id, :meeting => valid_attributes_for_update
         response.should redirect_to(meeting)
       end
     end
 
     describe "with invalid params" do
       it "assigns the meeting as @meeting" do
-        meeting = Meeting.create! valid_attributes
+        meeting = Meeting.create! valid_attributes_for_update
         # Trigger the behavior that occurs when invalid params are submitted
         Meeting.any_instance.stub(:save).and_return(false)
         put :update, :id => meeting.id.to_s, :meeting => {}
@@ -130,7 +146,7 @@ describe MeetingsController do
       end
 
       it "re-renders the 'edit' template" do
-        meeting = Meeting.create! valid_attributes
+        meeting = Meeting.create! valid_attributes_for_update
         # Trigger the behavior that occurs when invalid params are submitted
         Meeting.any_instance.stub(:save).and_return(false)
         put :update, :id => meeting.id.to_s, :meeting => {}

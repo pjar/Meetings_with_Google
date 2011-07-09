@@ -1,6 +1,27 @@
 %h1 Editing meeting
 
-= render 'form'
+= form_for @meeting do |f|
+  -if @meeting.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@meeting.errors.count, "error")} prohibited this meeting from being saved:"
+      %ul
+        - @meeting.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :title
+    = f.text_field :title
+  .field
+    = f.label :description
+    = f.text_area :description
+  .field
+    = f.label :place
+    = f.text_field :place
+  .field
+    = f.label :total_places
+    = f.text_field :total_places
+  .actions
+    = f.submit 'Save'
 
 = link_to 'Show', @meeting
 \|

@@ -19,5 +19,42 @@
 require 'spec_helper'
 
 describe Meeting do
-  pending "add some examples to (or delete) #{__FILE__}"
+#  pending "add some examples to (or delete) #{__FILE__}"
+  before(:each) do
+    @meeting_attr = {
+
+        :starts_at    =>  "2011-08-08 21:00",
+        :ends_at      =>  "2011-08-08 22:00",
+        :title        =>  "Spotkanie organizacyjne",
+        :description  =>  "Pierwsze spotkanie naszego zespolu",
+        :place        =>  "Sala konferencyjna",
+        :total_places =>  4
+
+    }
+  end
+
+  it "should create a new instance given valid attributes" do
+    Meeting.create!(@meeting_attr)
+  end
+
+  it "should reject meetings that have colliding dates with other meetings" do
+    Meeting.create!(@meeting_attr)
+
+    starts_at_times = ["20:00", "21:00", "21:30"]
+    ends_at_times   = ["21:00", "22:00", "22:30"]
+    starts_at_date  = "2011-08-08 "
+    ends_at_date    = "2011-08-08 "
+
+    starts_at_times.each_with_index do |start_time,i|
+      date1 = ""
+      date2 = ""
+      date1 << starts_at_date << start_time
+      date2 << ends_at_date   << ends_at_times[i]
+      meeting_with_colliding_date = Meeting.new(@meeting_attr.merge(:starts_at => date1, :ends_at => date2))
+      meeting_with_colliding_date.should_not be_valid
+
+    end
+  end
+
+
 end
