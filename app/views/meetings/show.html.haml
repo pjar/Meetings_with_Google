@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Starts at:
+  = @meeting.starts_at
+%p
+  %b Ends at:
+  = @meeting.ends_at
+%p
+  %b Title:
+  = @meeting.title
+%p
+  %b Description:
+  = @meeting.description
+%p
+  %b Place:
+  = @meeting.place
+%p
+  %b Tutor:
+  = @meeting.tutor
+%p
+  %b Total places:
+  = @meeting.total_places
+
+= link_to 'Edit', edit_meeting_path(@meeting)
+\|
+= link_to 'Back', meetings_path
