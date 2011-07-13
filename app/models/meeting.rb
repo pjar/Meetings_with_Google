@@ -17,8 +17,29 @@
 #
 
 class Meeting < ActiveRecord::Base
-  attr_accessible :starts_at, :ends_at, :title, :description, :venue, :tutor, :available_places, :total_places
+  attr_accessible :starts_at, :ends_at, :title, :description,
+                  :place, :tutor, :available_places, :total_places,
+                  :google_event_id, :google_sync_status
   validate :dates_cannot_collide
+
+
+##############################################
+
+### UPDATING Meeting
+
+  def update_meeting_attrs(params)
+    temp_meeting_attrs = self.attributes
+    params = temp_meeting_attrs.merge(params)
+    self.destroy
+    if Meeting.create(params)
+       true
+    else
+      Meeting.create(temp_meeting_attrs)
+      false
+    end
+  end
+
+### end of UPDATING Meeting
 
   protected
 

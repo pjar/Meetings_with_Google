@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f90cdf04-c1cb-4e76-a7d1-95b14abb522a" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Meetings_with_Google.iml" afterPath="$PROJECT_DIR$/.idea/Meetings_with_Google.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/meetings_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/meetings_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/meeting.rb" afterPath="$PROJECT_DIR$/app/models/meeting.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/meetings/edit.html.haml" afterPath="$PROJECT_DIR$/app/views/meetings/edit.html.haml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/controllers/meetings_controller_spec.rb" afterPath="$PROJECT_DIR$/spec/controllers/meetings_controller_spec.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/meeting_spec.rb" afterPath="$PROJECT_DIR$/spec/models/meeting_spec.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/user_spec.rb" afterPath="$PROJECT_DIR$/spec/models/user_spec.rb" />
     </list>
     <ignored path="Meetings_with_Google.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -54,25 +53,25 @@
       <file leaf-file-name="meetings_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/meetings_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="22" selection-start="1353" selection-end="1353" vertical-scroll-proportion="0.0">
+            <state line="64" column="10" selection-start="1594" selection-end="1594" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="meeting.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="meeting.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/meeting.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="46" selection-start="979" selection-end="979" vertical-scroll-proportion="0.0">
+            <state line="30" column="22" selection-start="860" selection-end="860" vertical-scroll-proportion="0.65194803">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="meetings_controller_spec.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="meetings_controller_spec.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spec/controllers/meetings_controller_spec.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="152" column="0" selection-start="5658" selection-end="5658" vertical-scroll-proportion="0.6131013">
+            <state line="143" column="34" selection-start="5273" selection-end="5333" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -81,7 +80,7 @@
       <file leaf-file-name="meeting_spec.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spec/models/meeting_spec.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="42" selection-start="1381" selection-end="1381" vertical-scroll-proportion="0.0">
+            <state line="48" column="12" selection-start="1377" selection-end="1377" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -90,7 +89,7 @@
       <file leaf-file-name="users_controller_spec.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spec/controllers/users_controller_spec.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="22" selection-start="2004" selection-end="2004" vertical-scroll-proportion="0.0">
+            <state line="118" column="2" selection-start="4057" selection-end="4057" vertical-scroll-proportion="-29.74074">
               <folding />
             </state>
           </provider>
@@ -99,7 +98,7 @@
       <file leaf-file-name="user.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/user.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="41" selection-start="270" selection-end="270" vertical-scroll-proportion="0.0">
+            <state line="36" column="56" selection-start="728" selection-end="728" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -137,8 +136,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/views/layouts/application.html.haml" />
-        <option value="$PROJECT_DIR$/app/views/users/new.html.haml" />
         <option value="$PROJECT_DIR$/app/views/users/edit.html.haml" />
         <option value="$PROJECT_DIR$/app/views/shared/_form_for_user.html.haml" />
         <option value="$PROJECT_DIR$/app/controllers/users_controller.rb" />
@@ -148,11 +145,13 @@
         <option value="$PROJECT_DIR$/app/views/meetings/show.html.haml" />
         <option value="$PROJECT_DIR$/app/views/meetings/index.html.haml" />
         <option value="$PROJECT_DIR$/spec/models/user_spec.rb" />
-        <option value="$PROJECT_DIR$/app/models/meeting.rb" />
         <option value="$PROJECT_DIR$/spec/models/meeting_spec.rb" />
         <option value="$PROJECT_DIR$/app/views/meetings/_form.html.haml" />
         <option value="$PROJECT_DIR$/app/views/meetings/edit.html.haml" />
+        <option value="$PROJECT_DIR$/spec/controllers/users_controller_spec.rb" />
         <option value="$PROJECT_DIR$/spec/controllers/meetings_controller_spec.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/meetings_controller.rb" />
+        <option value="$PROJECT_DIR$/app/models/meeting.rb" />
       </list>
     </option>
   </component>
@@ -189,8 +188,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Favorites" />
-      <pane id="RailsProjectView" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -323,7 +320,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Favorites" />
       <pane id="Scope" />
+      <pane id="RailsProjectView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -340,15 +339,15 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="144" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1051" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1053" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1051" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="142" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="136" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -449,7 +448,7 @@
     </configuration>
     <configuration default="true" type="JavascriptDebugSession" factoryName="Remote">
       <JSRemoteDebuggerConfigurationSettings>
-        <option name="engineId" />
+        <option name="engineId" value="embedded" />
         <option name="fileUrl" />
       </JSRemoteDebuggerConfigurationSettings>
       <method />
@@ -589,16 +588,16 @@
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32910156" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32910156" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26593557" sideWeight="0.67089844" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27827278" sideWeight="0.79785156" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20214844" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20214844" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32910156" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32910156" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -649,112 +648,90 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/views/users/new.html.haml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="76" selection-end="76" vertical-scroll-proportion="0.105421685">
-          <folding />
-        </state>
+        <state line="5" column="0" selection-start="76" selection-end="76" vertical-scroll-proportion="0.105421685" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/db/migrate/20110709211510_create_meetings.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="20" selection-start="291" selection-end="291" vertical-scroll-proportion="0.21084337">
-          <folding />
-        </state>
+        <state line="10" column="20" selection-start="291" selection-end="291" vertical-scroll-proportion="0.21084337" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/meetings/index.html.haml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="22" selection-end="586" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="2" column="0" selection-start="22" selection-end="586" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/shared/_form_for_user.html.haml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="18" selection-start="254" selection-end="254" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="8" column="18" selection-start="254" selection-end="254" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/meetings/new.html.haml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/meetings/show.html.haml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="25" selection-start="60" selection-end="60" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/models/meeting_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="42" selection-start="1381" selection-end="1381" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="4" column="25" selection-start="60" selection-end="60" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/meetings/_form.html.haml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="676" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="676" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/meetings/edit.html.haml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="281" selection-end="281" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="9" column="0" selection-start="281" selection-end="281" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/meeting.rb">
+    <entry file="file://$PROJECT_DIR$/app/controllers/users_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="46" selection-start="979" selection-end="979" vertical-scroll-proportion="0.0">
+        <state line="39" column="38" selection-start="756" selection-end="756" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/models/user_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="72" selection-start="1341" selection-end="1341" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/controllers/users_controller_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="118" column="2" selection-start="4057" selection-end="4057" vertical-scroll-proportion="-29.74074">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/meetings_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="22" selection-start="1353" selection-end="1353" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/controllers/users_controller_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="22" selection-start="2004" selection-end="2004" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/users_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="38" selection-start="756" selection-end="756" vertical-scroll-proportion="0.0">
+        <state line="64" column="10" selection-start="1594" selection-end="1594" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/user.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="41" selection-start="270" selection-end="270" vertical-scroll-proportion="0.0">
+        <state line="36" column="56" selection-start="728" selection-end="728" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spec/models/user_spec.rb">
+    <entry file="file://$PROJECT_DIR$/spec/models/meeting_spec.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="72" selection-start="1341" selection-end="1341" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="48" column="12" selection-start="1377" selection-end="1377" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/spec/controllers/meetings_controller_spec.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="152" column="0" selection-start="5658" selection-end="5658" vertical-scroll-proportion="0.6131013">
+        <state line="143" column="34" selection-start="5273" selection-end="5333" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/meeting.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="22" selection-start="860" selection-end="860" vertical-scroll-proportion="0.65194803">
           <folding />
         </state>
       </provider>

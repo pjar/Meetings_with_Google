@@ -59,7 +59,7 @@ class MeetingsController < ApplicationController
     @meeting = Meeting.find(params[:id])
 
     respond_to do |format|
-      if @meeting.update_attributes(params[:meeting])
+      if @meeting.update_meeting_attrs(params[:meeting])
         format.html { redirect_to(@meeting, :notice => 'Meeting was successfully updated.') }
         format.xml  { head :ok }
       else
