@@ -17,6 +17,9 @@
 #
 
 class Meeting < ActiveRecord::Base
+
+  include ActiveModel::Dirty
+
   attr_accessible :starts_at, :ends_at, :title, :description,
                   :place, :tutor, :available_places, :total_places,
                   :google_event_id, :google_sync_status
@@ -28,15 +31,7 @@ class Meeting < ActiveRecord::Base
 ### UPDATING Meeting
 
   def update_meeting_attrs(params)
-    temp_meeting_attrs = self.attributes
-    params = temp_meeting_attrs.merge(params)
-    self.destroy
-    if Meeting.create(params)
-       true
-    else
-      Meeting.create(temp_meeting_attrs)
-      false
-    end
+    self.update_attributes(params)
   end
 
 ### end of UPDATING Meeting
@@ -47,20 +42,23 @@ class Meeting < ActiveRecord::Base
 
     # Check if there is no other meeting in that time
     def dates_cannot_collide
-      Meeting.all.each do |meeting|
-        # does it start within other meeting time?
-        if starts_at >= meeting.starts_at && starts_at <= meeting.ends_at
-          errors.add(:starts_at,  'There is another meeting at this time')
-        # does it end within other meeting time?
-        elsif ends_at >= meeting.starts_at && ends_at <= meeting.ends_at
-          errors.add(:ends_at,  'There is another meeting at this time')
-        # does it run through other meeting time?
-        elsif starts_at <= meeting.starts_at && ends_at >= meeting.ends_at
-          errors.add(:starts_at, 'There is another meeting within that time')
-        end
-      end
-    end
 
+      # let's check if it's update or creation
+      if starts_at_changed? || ends_at_changed?
+        Meeting.all.each do |meeting|
+          # does it start within other meeting time?
+          if starts_at >= meeting.starts_at && starts_at <= meeting.ends_at
+            errors.add(:starts_at,  'There is another meeting at this time')
+          # does it end within other meeting time?
+          elsif ends_at >= meeting.starts_at && ends_at <= meeting.ends_at
+            errors.add(:ends_at,  'There is another meeting at this time')
+          # does it run through other meeting time?
+          elsif starts_at <= meeting.starts_at && ends_at >= meeting.ends_at
+            errors.add(:starts_at, 'There is another meeting within that time')
+          end
+        end
+    end
+  end
 end
 
 
