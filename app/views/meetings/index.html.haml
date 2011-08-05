@@ -2,8 +2,7 @@
 
 %table
   %tr
-    %th Starts at
-    %th Ends at
+    %th Meeting time
     %th Title
     %th Description
     %th Place
@@ -15,8 +14,7 @@
 
   - @meetings.each do |meeting|
     %tr
-      %td= meeting.starts_at
-      %td= meeting.ends_at
+      %td #{meeting.start_day}  #{meeting.start_time} to #{meeting.end_time}
       %td= meeting.title
       %td= meeting.description
       %td= meeting.place
