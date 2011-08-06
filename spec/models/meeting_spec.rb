@@ -56,7 +56,10 @@ describe Meeting do
     end
   end
 
-  it "should find meeting with given parameters" do
-
+  it "should reject meetings that end before start" do
+    bad_date = "2011-08-08 20:59"
+    meeting_that_ends_before_start = Meeting.new(@meeting_attr.merge(:ends_at => bad_date))
+    meeting_that_ends_before_start.should_not be_valid
   end
+
 end

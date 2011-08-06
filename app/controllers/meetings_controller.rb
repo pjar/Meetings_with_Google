@@ -40,11 +40,11 @@ class MeetingsController < ApplicationController
   # POST /meetings
   # POST /meetings.xml
   def create
-    @meeting = Meeting.new(params[:meeting])
+    @meeting = Meeting.new_meeting(params[:meeting])
 
     respond_to do |format|
       if @meeting.save
-        format.html { redirect_to(@meeting, :notice => 'Meeting was successfully created.') }
+        format.html { redirect_to(meetings_url, :notice => 'Meeting was successfully created.') }
         format.xml  { render :xml => @meeting, :status => :created, :location => @meeting }
       else
         format.html { render :action => "new" }
@@ -60,7 +60,7 @@ class MeetingsController < ApplicationController
 
     respond_to do |format|
       if @meeting.update_meeting_attrs(params[:meeting])
-        format.html { redirect_to(@meeting, :notice => 'Meeting was successfully updated.') }
+        format.html { redirect_to(meetings_url, :notice => 'Meeting was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
