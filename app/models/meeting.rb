@@ -33,11 +33,18 @@ class Meeting < ActiveRecord::Base
 ### CREATING Meeting
   ## TODO change that one
   def self.new_meeting(params)
-    str = Time.parse( params[:starts_at] )
+    #str = Time.parse( params[:starts_at] )
     #str << params[:starts_at]
-    puts "!!!" + str.strftime("%R")
+    #puts "!!!" + str.strftime("%R")
     @meeting = Meeting.new(params)
     @meeting.ends_at = ends_at_date_builder(@meeting)
+    #if params.nil?
+    #  start_date = Time.parse( params[:starts_at] )
+    #  end_time = Time.parse( params[:ends_at] )
+    #  ends_at = ""
+    #  ends_at << start_date.strftime("%F") << end_time.strftime(" %R")
+    #  puts "!!!" + ends_at.to_s
+    #end
     @meeting
 
   end

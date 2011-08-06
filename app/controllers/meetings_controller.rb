@@ -2,7 +2,7 @@ class MeetingsController < ApplicationController
   # GET /meetings
   # GET /meetings.xml
   def index
-    @meetings = Meeting.all
+    @meetings = Meeting.order("starts_at ASC")
 
     respond_to do |format|
       format.html # index.html.erb
