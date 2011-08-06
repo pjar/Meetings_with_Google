@@ -26,7 +26,7 @@ describe Meeting do
         :starts_at    =>  "2011-08-08 21:00",
         :ends_at      =>  "2011-08-08 22:00",
         :title        =>  "Spotkanie organizacyjne",
-        :description  =>  "Pierwsze spotkanie naszego zespolu",
+        :description  =>  "Pierwsze spotkanie",
         :place        =>  "Sala konferencyjna",
         :total_places =>  4
 
@@ -56,5 +56,10 @@ describe Meeting do
     end
   end
 
+  it "should reject meetings that end before start" do
+    bad_date = "2011-08-08 20:59"
+    meeting_that_ends_before_start = Meeting.new(@meeting_attr.merge(:ends_at => bad_date))
+    meeting_that_ends_before_start.should_not be_valid
+  end
 
 end

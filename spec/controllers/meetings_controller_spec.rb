@@ -28,7 +28,7 @@ describe MeetingsController do
         :starts_at    =>  "2011-09-08 11:00",
         :ends_at      =>  "2011-09-08 12:00",
         :title        =>  "Spotkanie organizacyjne",
-        :description  =>  "Pierwsze spotkanie naszego zespolu",
+        :description  =>  "Pierwsze spotkanie",
         :place        =>  "Sala konferencyjna",
         :total_places =>  4
     }
@@ -36,9 +36,9 @@ describe MeetingsController do
 
   def valid_attributes_for_update
     {
-        :title        =>  "Spotkanie organizacyjne",
-        :description  =>  "Pierwsze spotkanie naszego zespolu",
-        :place        =>  "Sala konferencyjna",
+        :title        =>  "Spotkanie organizacyjne2",
+        :description  =>  "Pierwsze spotkanie2",
+        :place        =>  "Sala konferencyjna2",
         :total_places =>  4
     }
   end
@@ -88,9 +88,9 @@ describe MeetingsController do
         assigns(:meeting).should be_persisted
       end
 
-      it "redirects to the created meeting" do
+      it "redirects to the list of meetings" do
         post :create, :meeting => valid_attributes
-        response.should redirect_to(Meeting.last)
+        response.should redirect_to(meetings_url)
       end
     end
 
@@ -129,10 +129,10 @@ describe MeetingsController do
         assigns(:meeting).should eq(meeting)
       end
 
-      it "redirects to the meeting" do
+      it "redirects to the meetings list" do
         meeting = Meeting.create! valid_attributes
         put :update, :id => meeting.id, :meeting => valid_attributes_for_update
-        response.should redirect_to(meeting)
+        response.should redirect_to(meetings_url)
       end
     end
 

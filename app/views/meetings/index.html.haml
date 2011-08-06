@@ -1,24 +1,26 @@
+%p#notice= notice
+
 %h1 Listing meetings
 
 %table
   %tr
-    %th Starts at
-    %th Ends at
+    %th
+    %th Meeting time
+    %th
     %th Title
-    %th Description
     %th Place
     %th Tutor
-    %th Total places
+    %th Places
     %th
     %th
     %th
 
   - @meetings.each do |meeting|
     %tr
-      %td= meeting.starts_at
-      %td= meeting.ends_at
+      %td #{meeting.start_day}
+      %td #{meeting.start_time} to #{meeting.end_time}
+      %td
       %td= meeting.title
-      %td= meeting.description
       %td= meeting.place
       %td= meeting.tutor
       %td= meeting.total_places
