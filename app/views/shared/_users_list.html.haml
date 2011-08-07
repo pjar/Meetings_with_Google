@@ -1,6 +1,7 @@
 %table
   %tr
     %th Name
+    %th ID
     %th Email
     %th
     %th
@@ -9,7 +10,10 @@
   - @users.each do |user|
     %tr
       %td= user.name
+      %td= user.id
       %td= user.email
-      %td= link_to 'Show', user
-      %td= link_to 'Edit', edit_user_path(user)
-      %td= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete
+      - if admin?
+        %td= link_to 'Show', user
+        %td= link_to 'Edit', edit_user_path(user)
+        - if !current_user(user.id)
+          %td= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete

@@ -74,6 +74,16 @@ class User < ActiveRecord::Base
 
 ### end of DESTROYING User
 
+
+##############################################
+
+### Authenticating User
+
+
+
+### end of Authenticating User
+
+
 end
 
 
