@@ -21,8 +21,9 @@ class Meeting < ActiveRecord::Base
   # it allows tracking changes in models - see declaration of validations
   include ActiveModel::Dirty
 
-  has_many  :participations
-  has_many  :users, :through => :participations
+  has_many    :participations
+  has_many    :users, :through => :participations
+  belongs_to  :tutor, :class_name => "User"
 
   attr_accessible :starts_at, :ends_at, :title, :description,
                   :place, :tutor, :available_places, :total_places,
@@ -36,7 +37,7 @@ class Meeting < ActiveRecord::Base
 
 ### CREATING Meeting
 
-  ## TODO change that one due to some failing tests
+  ## uses a method to construct proper params - it's due ugly datetime select in new_meeting form
   def self.new_meeting(params)
     params = ends_at_param_builder(params)
     Meeting.new(params)
@@ -62,8 +63,11 @@ class Meeting < ActiveRecord::Base
 
 ### UPDATING Meeting
 
+  ## uses a method to construct proper params - it's due ugly datetime select in update_meeting form
+
   def update_meeting_attrs(params)
-    self.update_attributes(ends_at_param_builder(params))
+    params = ends_at_param_builder(params)
+    self.update_attributes(params)
   end
 
 ### end of UPDATING Meeting
@@ -98,6 +102,10 @@ protected
   # building ends_at date from date only component of starts_at and time only component of ends_at
   # it's used to simplify meeting creation form
 
+  #
+
+  # I know it's ridiculous to have 2 same methods - I still don't get how to operate
+  # properly with self
   def self.ends_at_param_builder(params)
     if !params["ends_at(1i)"].nil?
       params["ends_at(1i)"] = params["starts_at(1i)"]
