@@ -2,5 +2,5 @@
 db/*.sqlite3
 log/*.log
 tmp/
-.idea/worksplace.xml
+.idea/workspace.xml
 .idea/Meetings_with_Google.iml
