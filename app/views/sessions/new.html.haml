@@ -1,0 +1,17 @@
+%p#notice= notice
+
+%h1 Sign in
+
+= form_for(:session, :url => sessions_path) do |f|
+
+  = f.label :email
+
+  = f.select  :user_id, options_from_collection_for_select(User.all, 'id', 'email')
+
+  = f.submit  "Sign in"
+
+%p New user? #{link_to "Sign up now!", signup_path}
+
+
+- if signed_in?
+  = link_to "Sign out", signout_path
