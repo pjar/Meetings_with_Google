@@ -25,8 +25,8 @@ describe MeetingsController do
   # update the return value of this method accordingly.
   def valid_attributes
     {
-        :starts_at    =>  "2011-09-08 11:00",
-        :ends_at      =>  "2011-09-08 12:00",
+        :starts_at    =>  "2012-09-08 11:00",
+        :ends_at      =>  "2012-09-08 12:00",
         :title        =>  "Spotkanie organizacyjne",
         :description  =>  "Pierwsze spotkanie",
         :place        =>  "Sala konferencyjna",
@@ -36,6 +36,8 @@ describe MeetingsController do
 
   def valid_attributes_for_update
     {
+        :starts_at    =>  "2011-09-08 12:00",
+        :ends_at      =>  "2011-09-08 13:00",
         :title        =>  "Spotkanie organizacyjne2",
         :description  =>  "Pierwsze spotkanie2",
         :place        =>  "Sala konferencyjna2",

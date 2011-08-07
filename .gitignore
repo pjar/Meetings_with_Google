@@ -2,5 +2,10 @@
 db/*.sqlite3
 log/*.log
 tmp/
-.idea/Meetings_with_Google.iml
+<<<<<<< HEAD
 .idea/workspace.xml
+.idea/Meetings_with_Google.iml
+=======
+.idea/workspace.xml
+.idea/Meetings_with_Google.iml
+>>>>>>> modeling-participations
