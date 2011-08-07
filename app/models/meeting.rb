@@ -18,7 +18,11 @@
 
 class Meeting < ActiveRecord::Base
 
+  # it allows tracking changes in models - see declaration of validations
   include ActiveModel::Dirty
+
+  has_many  :participations
+  has_many  :users, :through => :participations
 
   attr_accessible :starts_at, :ends_at, :title, :description,
                   :place, :tutor, :available_places, :total_places,
@@ -31,22 +35,11 @@ class Meeting < ActiveRecord::Base
 ##############################################
 
 ### CREATING Meeting
-  ## TODO change that one
-  def self.new_meeting(params)
-    #str = Time.parse( params[:starts_at] )
-    #str << params[:starts_at]
-    #puts "!!!" + str.strftime("%R")
-    @meeting = Meeting.new(params)
-    @meeting.ends_at = ends_at_date_builder(@meeting)
-    #if params.nil?
-    #  start_date = Time.parse( params[:starts_at] )
-    #  end_time = Time.parse( params[:ends_at] )
-    #  ends_at = ""
-    #  ends_at << start_date.strftime("%F") << end_time.strftime(" %R")
-    #  puts "!!!" + ends_at.to_s
-    #end
-    @meeting
 
+  ## TODO change that one due to some failing tests
+  def self.new_meeting(params)
+    params = ends_at_param_builder(params)
+    Meeting.new(params)
   end
 
 ### end of CREATING Meeting
@@ -70,7 +63,7 @@ class Meeting < ActiveRecord::Base
 ### UPDATING Meeting
 
   def update_meeting_attrs(params)
-    self.update_attributes(params)
+    self.update_attributes(ends_at_param_builder(params))
   end
 
 ### end of UPDATING Meeting
@@ -104,9 +97,27 @@ protected
 
   # building ends_at date from date only component of starts_at and time only component of ends_at
   # it's used to simplify meeting creation form
-  def self.ends_at_date_builder(meeting)
-    date = ""
-    date << meeting.starts_at.strftime("%F") << meeting.ends_at.strftime(" %R")
+
+  def self.ends_at_param_builder(params)
+    if !params["ends_at(1i)"].nil?
+      params["ends_at(1i)"] = params["starts_at(1i)"]
+      params["ends_at(2i)"] = params["starts_at(2i)"]
+      params["ends_at(3i)"] = params["starts_at(3i)"]
+      params["ends_at(4i)"] = params["ends_at(4i)"]
+      params["ends_at(5i)"] = params["ends_at(5i)"]
+    end
+    params
+  end
+
+  def ends_at_param_builder(params)
+    if !params["ends_at(1i)"].nil?
+      params["ends_at(1i)"] = params["starts_at(1i)"]
+      params["ends_at(2i)"] = params["starts_at(2i)"]
+      params["ends_at(3i)"] = params["starts_at(3i)"]
+      params["ends_at(4i)"] = params["ends_at(4i)"]
+      params["ends_at(5i)"] = params["ends_at(5i)"]
+    end
+    params
   end
 
 
@@ -119,24 +130,25 @@ protected
     # it was causing problems otherwise
     if starts_at_changed? || ends_at_changed?
       Meeting.all.each do |meeting|
+        if !id.eql?(meeting.id)
+          # does it start within other meeting time?
+            if starts_at >= meeting.starts_at && starts_at <= meeting.ends_at
+            errors.add(:starts_at,  ' - There is another meeting between ' +
+                         meeting.starts_at.strftime("%R") +
+                                           meeting.ends_at.strftime("-%R"))
 
-        # does it start within other meeting time?
-          if starts_at >= meeting.starts_at && starts_at <= meeting.ends_at
-          errors.add(:starts_at,  'There is another meeting between: ' +
-                       meeting.starts_at.strftime("%R") +
-                                         meeting.ends_at.strftime("-%R"))
+          # does it end within other meeting time?
+          elsif ends_at >= meeting.starts_at && ends_at <= meeting.ends_at
+            errors.add(:ends_at,  ' - There is another meeting between ' +
+                          meeting.starts_at.strftime("%R") +
+                                           meeting.ends_at.strftime("-%R"))
 
-        # does it end within other meeting time?
-        elsif ends_at >= meeting.starts_at && ends_at <= meeting.ends_at
-          errors.add(:ends_at,  'There is another meeting between: ' +
-                        meeting.starts_at.strftime("%R") +
-                                         meeting.ends_at.strftime("-%R"))
-
-        # does it run through other meeting time?
-        elsif starts_at <= meeting.starts_at && ends_at >= meeting.ends_at
-          errors.add(:starts_at, 'There is another meeting between: ' +
-                        meeting.starts_at.strftime("%R") +
-                                         meeting.ends_at.strftime("-%R"))
+          # does it run through other meeting time?
+          elsif starts_at <= meeting.starts_at && ends_at >= meeting.ends_at
+            errors.add(:starts_at, ' - There is another meeting between ' +
+                          meeting.starts_at.strftime("%R") +
+                                           meeting.ends_at.strftime("-%R"))
+          end
         end
       end
     end
@@ -146,7 +158,7 @@ protected
   def cannot_end_before_start
     if starts_at_changed? || ends_at_changed?
       if starts_at >= ends_at
-        errors.add(:ends_at, '- You can\'t end meeting before it starts :)' )
+        errors.add(:ends_at, '- You can\'t finish meeting before it starts :)' )
       end
     end
   end

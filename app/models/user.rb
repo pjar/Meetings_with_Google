@@ -11,6 +11,10 @@
 
 
 class User < ActiveRecord::Base
+
+  has_many  :participations
+  has_many  :meetings, :through => :participations
+
   attr_accessible :name, :email
 
 
