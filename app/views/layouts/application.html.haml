@@ -16,3 +16,4 @@
     -if Rails.env.development?
       -if signed_in?
         %p Logged in as #{User.find(session[:user_id]).name}
+      %p Remembered location: #{session[:previous_location].inspect.to_s}

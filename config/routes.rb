@@ -1,4 +1,8 @@
 MeetingsWithGoogle::Application.routes.draw do
+  get "pages/index"
+
+  get "pages/show"
+
   get "sessions/new"
 
   resources :meetings

@@ -1,16 +1,20 @@
 class SessionsController < ApplicationController
+
+
+
   def new
+    store_location
+
   end
 
   def create
     sign_in( User.find_user(params[:session][:user_id]) )
-    puts "!!! create " + params[:session][:user_id].inspect.to_s
     redirect_to users_path
   end
 
   def destroy
     session[:user_id] = nil
-    render 'new'
+    redirect_to store_location
   end
 
 end

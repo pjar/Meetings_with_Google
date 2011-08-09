@@ -130,9 +130,7 @@ protected
 
   def self.places
     places = []
-    Meeting.all.each do |meeting|
-      places << meeting.place
-    end
+    Meeting.all.collect {|m| places << m.place}
     places.uniq
   end
 
