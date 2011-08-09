@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    sign_in User.find_user(params[:session][:user_id])
+    sign_in( User.find_user(params[:session][:user_id]) )
     puts "!!! create " + params[:session][:user_id].inspect.to_s
     redirect_to users_path
   end

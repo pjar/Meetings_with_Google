@@ -1,7 +1,6 @@
 %table
   %tr
     %th Name
-    %th ID
     %th Email
     %th
     %th
@@ -10,7 +9,6 @@
   - @users.each do |user|
     %tr
       %td= user.name
-      %td= user.id
       %td= user.email
       - if admin?
         %td= link_to 'Show', user

@@ -10,7 +10,7 @@ module SessionsHelper
 
   def admin?
     User.find(session[:user_id]).name.eql?("Admin")
-  end
+end
 
   def current_user(user_id)
     session[:user_id] == user_id

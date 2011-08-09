@@ -128,6 +128,14 @@ protected
     params
   end
 
+  def self.places
+    places = []
+    Meeting.all.each do |meeting|
+      places << meeting.place
+    end
+    places.uniq
+  end
+
 
 ### Validations
 

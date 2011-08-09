@@ -6,4 +6,5 @@
 
 %br
 
-= link_to 'New User', new_user_path
+- if admin?
+  = link_to 'New User', new_user_path

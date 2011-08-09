@@ -20,6 +20,7 @@
     = f.text_area :description
   .field
     = f.label :place
+    = f.select  :place, options_for_select(Meeting.places, :place )
     = f.text_field :place
   .field
     = f.label :total_places
