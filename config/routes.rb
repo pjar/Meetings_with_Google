@@ -11,9 +11,12 @@ MeetingsWithGoogle::Application.routes.draw do
 
   resources :sessions,  :only =>  [:new, :create, :destroy]
 
+  resource  :pages, :only => [:index, :show]
+
   match '/signup',  :to => 'users#new'
   match '/signin',  :to => 'sessions#new'
   match '/signout', :to => 'sessions#destroy'
+  match '/home',        :to => 'pages#index'
 
 
   # The priority is based upon order of creation:

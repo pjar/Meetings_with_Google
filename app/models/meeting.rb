@@ -142,30 +142,33 @@ protected
 
     # let's check if date has changed - if no dont bother with validation
     # it was causing problems otherwise
-    if starts_at_changed? || ends_at_changed?
+    # SOLVED by simply checking the id of meeting.....
+    #if starts_at_changed? || ends_at_changed?
       Meeting.all.each do |meeting|
         if !id.eql?(meeting.id)
-          # does it start within other meeting time?
+          if place.eql?(meeting.place)
+            # does it start within other meeting time?
             if starts_at >= meeting.starts_at && starts_at <= meeting.ends_at
-            errors.add(:starts_at,  ' - There is another meeting between ' +
+              errors.add(:starts_at,  ' - There is another meeting between ' +
                          meeting.starts_at.strftime("%R") +
                                            meeting.ends_at.strftime("-%R"))
 
-          # does it end within other meeting time?
-          elsif ends_at >= meeting.starts_at && ends_at <= meeting.ends_at
-            errors.add(:ends_at,  ' - There is another meeting between ' +
-                          meeting.starts_at.strftime("%R") +
-                                           meeting.ends_at.strftime("-%R"))
+            # does it end within other meeting time?
+            elsif ends_at >= meeting.starts_at && ends_at <= meeting.ends_at
+              errors.add(:ends_at,  ' - There is another meeting between ' +
+                            meeting.starts_at.strftime("%R") +
+                                             meeting.ends_at.strftime("-%R"))
 
-          # does it run through other meeting time?
-          elsif starts_at <= meeting.starts_at && ends_at >= meeting.ends_at
-            errors.add(:starts_at, ' - There is another meeting between ' +
-                          meeting.starts_at.strftime("%R") +
-                                           meeting.ends_at.strftime("-%R"))
+            # does it run through other meeting time?
+            elsif starts_at <= meeting.starts_at && ends_at >= meeting.ends_at
+              errors.add(:starts_at, ' - There is another meeting between ' +
+                            meeting.starts_at.strftime("%R") +
+                                             meeting.ends_at.strftime("-%R"))
+            end
           end
         end
       end
-    end
+    #end
   end
 
   # Until there's no nice date picking tool let's check if meeting has proper start-end times

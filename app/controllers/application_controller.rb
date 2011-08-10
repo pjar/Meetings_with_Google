@@ -7,9 +7,13 @@ class ApplicationController < ActionController::Base
 
   private
   def store_location
-    session[:previous_location] ||= request.referer
-    puts "!!! store_location " + session[:previous_location].inspect.to_s
-    session[:previous_location]
+    if !request.referer.include?(signin_path)
+      puts "!!! if"
+      session[:previous_location] = request.referer
+    elsif !request.referer.include?((sessions_path) || (sigout_path))
+      puts "!!! elsif"
+      session[:previous_location] = nil
+    end
   end
 
   def clear_location

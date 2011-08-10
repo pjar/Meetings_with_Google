@@ -6,7 +6,7 @@
 
   = f.label :email
 
-  = f.select  :user_id, options_from_collection_for_select(User.all, 'id', 'email', params[:user_id])
+  = f.select  :user_id, options_from_collection_for_select(User.order("name ASC"), 'id', 'name', params[:user_id])
 
   = f.submit  "Sign in"
 
