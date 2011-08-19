@@ -14,7 +14,8 @@ module SessionsHelper
     if session[:user_id].nil?
       false
     else
-      User.find(session[:user_id]).name.eql?("Admin")
+     User.find(session[:user_id]).name.eql?("Admin")
+     #User.where(:id => session[:user_id]).name.eql?("Admin")
     end
   end
 
