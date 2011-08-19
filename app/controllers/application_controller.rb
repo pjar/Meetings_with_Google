@@ -3,9 +3,19 @@ class ApplicationController < ActionController::Base
 #  before_filter :clear_location
 
 
-  include SessionsHelper
+include SessionsHelper
 
-  private
+protected
+
+  def authorize_admin
+    unless admin?
+      flash[:notice] = "You need to sign in as Admin to view this resource"
+      redirect_to home_path
+      false
+    end
+  end
+
+private
   def store_location
     if !request.referer.include?(signin_path)
       session[:previous_location] = request.referer

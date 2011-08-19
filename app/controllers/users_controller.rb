@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+
+  before_filter :authorize_admin
+
   # GET /users
   # GET /users.xml
   def index
@@ -44,9 +47,15 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        sign_in @user
-        format.html { redirect_to(@user, :notice => 'User was successfully created.') }
-        format.xml  { render :xml => @user, :status => :created, :location => @user }
+        if admin?
+          format.html { redirect_to(users_path, :notice => 'User was successfully created.') }
+          format.xml  { render :xml => @user, :status => :created, :location => users_path }
+        else
+          sign_in @user
+          format.html { redirect_to(@user, :notice => 'User was successfully created.') }
+          format.xml  { render :xml => @user, :status => :created, :location => @user }
+        end
+
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }

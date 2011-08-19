@@ -1,4 +1,6 @@
 class MeetingsController < ApplicationController
+
+  before_filter :authorize_admin, :except  => [:index, :show]
   # GET /meetings
   # GET /meetings.xml
   def index
