@@ -1,3 +1,4 @@
+
 # == Schema Information
 #
 # Table name: meetings
@@ -8,13 +9,14 @@
 #  title              :string(255)
 #  description        :text
 #  place              :string(255)
-#  tutor              :string(255)
 #  total_places       :integer
 #  google_event_id    :string(255)
 #  google_sync_status :string(255)
 #  created_at         :datetime
 #  updated_at         :datetime
 #
+
+
 
 class Meeting < ActiveRecord::Base
 
@@ -95,7 +97,31 @@ class Meeting < ActiveRecord::Base
 
 #### end of Date formatting
 
+  def has_no_host?
+    !self.host_presence
+  end
 
+  def available_places
+    self.total_places - self.participations.size
+  end
+
+  def host
+    if self.host_presence
+      self.participations.each do |p|
+        if p.user_as_host
+          user = User.find(p.user)
+          return user
+        end
+      end
+    end
+
+  end
+
+  def attendees
+    attendees = []
+    self.participations.where(:user_as_host => false).collect { |p| attendees << p.user }
+    attendees
+  end
 
 protected
 
@@ -103,6 +129,18 @@ protected
   # it's used to simplify meeting creation form
 
   #
+
+
+
+  def host_presence
+      self.participations.each do |p|
+        if p.user_as_host
+          return true
+        end
+      end
+    false
+  end
+
 
   # I know it's ridiculous to have 2 same methods - I still don't get how to operate
   # properly with self
@@ -148,6 +186,7 @@ protected
         if !id.eql?(meeting.id)
           if place.eql?(meeting.place)
             # does it start within other meeting time?
+            # TODO: DRY it out
             if starts_at >= meeting.starts_at && starts_at <= meeting.ends_at
               errors.add(:starts_at,  ' - There is another meeting between ' +
                          meeting.starts_at.strftime("%R") +

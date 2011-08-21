@@ -20,14 +20,20 @@
       %td
       %td= meeting.title
       %td= meeting.place
-      %td= meeting.tutor
-      %td= meeting.total_places
+      -if meeting.has_no_host?
+        %td
+      -else
+        %td= meeting.host.name
+      %td= meeting.available_places
       - if signed_in?
+        %td= link_to 'Show', meeting_or_participation(meeting)
         -if admin?
-          %td= link_to 'Show', meeting
           %td= link_to 'Edit', edit_meeting_path(meeting)
           %td= link_to 'Destroy', meeting, :confirm => 'Are you sure?', :method => :delete
-
+        -else
+          %td= link_to  'Attend', participation_params(meeting, false)
+          -if meeting.has_no_host?
+            %td= link_to 'Host', participation_params(meeting, true)
 %br
 - if admin?
   = link_to 'New Meeting', new_meeting_path

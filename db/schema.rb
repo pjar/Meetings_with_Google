@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110807112903) do
+ActiveRecord::Schema.define(:version => 20110820220228) do
 
   create_table "meetings", :force => true do |t|
     t.datetime "starts_at"
@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(:version => 20110807112903) do
     t.string   "title"
     t.text     "description"
     t.string   "place"
-    t.string   "tutor"
     t.integer  "total_places"
     t.string   "google_event_id"
     t.string   "google_sync_status"
@@ -32,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20110807112903) do
     t.text     "comments"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "user_as_host"
   end
 
   add_index "participations", ["user_id", "meeting_id"], :name => "index_participations_on_user_id_and_meeting_id"

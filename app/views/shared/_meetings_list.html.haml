@@ -1,0 +1,21 @@
+%p
+  %b Starts at:
+  = @meeting.starts_at
+%p
+  %b Ends at:
+  = @meeting.ends_at
+%p
+  %b Title:
+  = @meeting.title
+%p
+  %b Description:
+  = @meeting.description
+%p
+  %b Place:
+  = @meeting.place
+%p
+  %b Tutor:
+  -if @meeting.has_no_host?
+
+  -else
+    = @meeting.host.name

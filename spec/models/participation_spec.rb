@@ -5,15 +5,17 @@ describe Participation do
 end
 
 
+
 # == Schema Information
 #
 # Table name: participations
 #
-#  id         :integer         not null, primary key
-#  user_id    :integer
-#  meeting_id :integer
-#  comments   :text
-#  created_at :datetime
-#  updated_at :datetime
+#  id           :integer         not null, primary key
+#  user_id      :integer
+#  meeting_id   :integer
+#  comments     :text
+#  created_at   :datetime
+#  updated_at   :datetime
+#  user_as_host :boolean
 #
 

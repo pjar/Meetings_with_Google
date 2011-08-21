@@ -1,4 +1,13 @@
 MeetingsWithGoogle::Application.routes.draw do
+
+ # get "participations/new"
+
+  get "participations/create"
+
+ # get "participations/index"
+
+ # get "participations/destroy"
+
   get "pages/index"
 
   get "pages/show"
@@ -12,6 +21,8 @@ MeetingsWithGoogle::Application.routes.draw do
   resources :sessions,  :only =>  [:new, :create, :destroy]
 
   resource  :pages, :only => [:index, :show]
+
+  resources :participations
 
   match '/signup',  :to => 'users#new'
   match '/signin',  :to => 'sessions#new'
