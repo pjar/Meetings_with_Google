@@ -19,6 +19,20 @@ module SessionsHelper
     end
   end
 
+  def authorize_admin
+    unless admin?
+      flash[:notice] = "You need to sign in as Admin to view this resource"
+      redirect_to home_path
+      false
+    end
+  end
+
+  def authorize_user
+    unless signed_in?
+      redirect_to home_path
+    end
+  end
+
 private
 
   def current_user(user_id)

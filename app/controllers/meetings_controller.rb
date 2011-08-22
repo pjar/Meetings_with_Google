@@ -1,10 +1,14 @@
 class MeetingsController < ApplicationController
 
   before_filter :authorize_admin, :except  => [:index, :show]
+
   # GET /meetings
   # GET /meetings.xml
   def index
     @meetings = Meeting.order("starts_at ASC")
+    if signed_in?
+      @user = User.find(session[:user_id])
+    end
 
     respond_to do |format|
       format.html # index.html.erb

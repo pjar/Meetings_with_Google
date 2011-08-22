@@ -31,9 +31,14 @@
           %td= link_to 'Edit', edit_meeting_path(meeting)
           %td= link_to 'Destroy', meeting, :confirm => 'Are you sure?', :method => :delete
         -else
-          %td= link_to  'Attend', participation_params(meeting, false)
-          -if meeting.has_no_host?
-            %td= link_to 'Host', participation_params(meeting, true)
+          -if @user.already_participates(meeting)
+            %td= link_to  "Resign", {:controller => "participations", :action => "destroy",
+                                    :meeting_id => meeting.id, :user_id => @user.id}
+          -else
+            %td= link_to  'Attend', participation_params(meeting, false)
+            -if meeting.has_no_host?
+              %td= link_to 'Host', participation_params(meeting, true)
+
 %br
 - if admin?
   = link_to 'New Meeting', new_meeting_path

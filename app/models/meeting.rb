@@ -24,8 +24,7 @@ class Meeting < ActiveRecord::Base
   include ActiveModel::Dirty
 
   has_many    :participations
-  has_many    :users, :through => :participations
-  belongs_to  :tutor, :class_name => "User"
+  has_many    :users, :through => :participations#  , :dependent => :destroy
 
   attr_accessible :starts_at, :ends_at, :title, :description,
                   :place, :tutor, :available_places, :total_places,

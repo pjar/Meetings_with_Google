@@ -4,9 +4,9 @@ MeetingsWithGoogle::Application.routes.draw do
 
   get "participations/create"
 
- # get "participations/index"
+  get "participations/index"
 
- # get "participations/destroy"
+  get "participations/destroy"
 
   get "pages/index"
 

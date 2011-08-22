@@ -13,8 +13,7 @@
 class User < ActiveRecord::Base
 
   has_many  :participations
-  has_many  :meetings, :through => :participations
-  has_many  :lectures, :class_name => "Meeting",  :foreign_key => "tutor_id"
+  has_many  :meetings, :through => :participations#, :dependent => :destroy
 
   attr_accessible :name, :email
 
@@ -84,6 +83,13 @@ class User < ActiveRecord::Base
 
 ### end of Authenticating User
 
+  def already_participates(meeting)
+    self.meetings.include?(meeting)
+  end
+
+  def attends_any_meetings?
+    !self.meetings.empty?
+  end
 
 end
 
