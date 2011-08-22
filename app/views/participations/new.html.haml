@@ -1,0 +1,25 @@
+= render(:partial => "shared/meetings_list", :locals => {:@meeting => @meeting})
+
+%h3 Participation list
+%table
+  %tr
+    %th Name
+
+  -@meeting.attendees.each do |user|
+    %tr
+      %td= user.name
+
+
+
+-if @user.already_participates(@meeting)
+  = link_to  "Resign", {:action => "destroy", :meeting_id => @meeting.id, :user_id => @user.id}
+-else
+  -if @meeting.has_no_host?
+    = link_to 'Host', {:action => "create", :user_as_host => true,
+                        :meeting_id => @meeting.id, :user_id => session[:user_id]}
+    \|
+
+  = link_to  "Attend", {:action => "create", :meeting_id => @meeting.id,
+                         :user_id => session[:user_id]}
+\|
+= link_to "Back", meetings_path

@@ -1,0 +1,36 @@
+%h1 Listing meetings
+
+%table
+  %tr
+    %th
+    %th Meeting time
+    %th
+    %th Title
+    %th Place
+    %th Tutor
+    %th Places
+    %th
+    %th
+    %th
+
+  - @meetings.each do |meeting|
+    %tr
+      %td #{meeting.start_day}
+      %td #{meeting.start_time} to #{meeting.end_time}
+      %td
+      %td= meeting.title
+      %td= meeting.place
+      -if meeting.has_no_host?
+        %td
+      -else
+        %td= meeting.host.name
+      %td= meeting.available_places
+      - if signed_in?
+        %td= link_to 'Show', meeting_or_participation(meeting)
+        -if @user.already_participates(meeting)
+          %td= link_to  "Resign", {:controller => "participations", :action => "destroy",
+                                    :meeting_id => meeting.id, :user_id => @user.id}
+        -else
+          %td= link_to  'Attend', participation_params(meeting, false)
+          -if meeting.has_no_host?
+            %td= link_to 'Host', participation_params(meeting, true)
