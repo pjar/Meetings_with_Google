@@ -12,8 +12,8 @@
 
 class User < ActiveRecord::Base
 
-  has_many  :participations
-  has_many  :meetings, :through => :participations#, :dependent => :destroy
+  has_many  :participations, :dependent => :destroy
+  has_many  :meetings, :through => :participations
 
   attr_accessible :name, :email
 
@@ -31,11 +31,11 @@ class User < ActiveRecord::Base
 ### CREATING User
 
   def self.new_user
-    User.new
+    new
   end
 
   def self.new_user_with_params(user)
-    User.new(user)
+    new(user)
   end
 
 ### end of CREATING User
@@ -45,11 +45,11 @@ class User < ActiveRecord::Base
 ### READING User
 
   def self.find_user(user_id)
-    User.find(user_id)
+    find(user_id)
   end
 
   def self.find_all_users
-    User.all
+    all
   end
 
 ### end of READING User
@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
 ### UPDATING User
 
   def update_user_info(params)
-    self.update_attributes(params)
+    update_attributes(params)
   end
 
 ### end of UPDATING User
@@ -69,7 +69,7 @@ class User < ActiveRecord::Base
 ### DESTROYING User
 
   def destroy_user
-    self.destroy
+    destroy
   end
 
 ### end of DESTROYING User

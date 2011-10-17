@@ -8,10 +8,11 @@
 
   .field
     = f.label :starts_at
-    = f.datetime_select :starts_at, :minute_step => 15
+    = f.datetime_select :starts_at, :minute_step => 15, :default => Time.now
   .field
     = f.label :ends_at
-    = f.datetime_select :ends_at , :minute_step => 15  , :discard_year => true, :discard_month => true
+    = f.datetime_select :ends_at , :minute_step => 15  , :discard_year => true, :discard_month => true,
+                        :default => Time.now + 1.hour
   .field
     = f.label :title
     = f.text_field :title

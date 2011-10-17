@@ -23,8 +23,8 @@ class Meeting < ActiveRecord::Base
   # it allows tracking changes in models - see declaration of validations
   include ActiveModel::Dirty
 
-  has_many    :participations
-  has_many    :users, :through => :participations#  , :dependent => :destroy
+  has_many    :participations, :dependent => :destroy
+  has_many    :users, :through => :participations
 
   attr_accessible :starts_at, :ends_at, :title, :description,
                   :place, :tutor, :available_places, :total_places,
@@ -105,8 +105,8 @@ class Meeting < ActiveRecord::Base
   end
 
   def host
-    if self.host_presence
-      self.participations.each do |p|
+    if host_presence
+      participations.each do |p|
         if p.user_as_host
           user = User.find(p.user)
           return user
@@ -118,7 +118,7 @@ class Meeting < ActiveRecord::Base
 
   def attendees
     attendees = []
-    self.participations.where(:user_as_host => false).collect { |p| attendees << p.user }
+    participations.where(:user_as_host => false).collect { |p| attendees << p.user }
     attendees
   end
 
@@ -132,7 +132,7 @@ protected
 
 
   def host_presence
-      self.participations.each do |p|
+      participations.each do |p|
         if p.user_as_host
           return true
         end
@@ -172,41 +172,57 @@ protected
   end
 
 
+  def not_comparing_same_meetings?(meeting)
+    !id.eql?(meeting.id)
+  end
+
+  def comparing_meetings_with_same_venue?(meeting)
+    place.eql?(meeting.place)
+  end
+
+  def meeting_starts_within_other?(meeting)
+    starts_at >= meeting.starts_at && starts_at <= meeting.ends_at
+  end
+
+  def meeting_ends_within_other?(meeting)
+    ends_at >= meeting.starts_at && ends_at <= meeting.ends_at
+  end
+
+  def meeting_runs_through_other?(meeting)
+    starts_at <= meeting.starts_at && ends_at >= meeting.ends_at
+  end
+
+  def produce_meeting_date_collision_error(meeting, symbol)
+    errors.add(symbol,  ' - There is another meeting between ' +
+                         meeting.starts_at.strftime("%R") +
+                                           meeting.ends_at.strftime("-%R"))
+  end
+
 ### Validations
 
   # Check if there is no other meeting in that time
   def dates_cannot_collide
 
-    # let's check if date has changed - if no dont bother with validation
-    # it was causing problems otherwise
-    # SOLVED by simply checking the id of meeting.....
-    #if starts_at_changed? || ends_at_changed?
+    # let's check if date or place has changed - if not then dont bother with validatiot
+    if starts_at_changed? || ends_at_changed? || place_changed?
       Meeting.all.each do |meeting|
-        if !id.eql?(meeting.id)
-          if place.eql?(meeting.place)
+        #if not_comparing_same_meetings?(meeting)
+          if comparing_meetings_with_same_venue?(meeting)
             # does it start within other meeting time?
             # TODO: DRY it out
-            if starts_at >= meeting.starts_at && starts_at <= meeting.ends_at
-              errors.add(:starts_at,  ' - There is another meeting between ' +
-                         meeting.starts_at.strftime("%R") +
-                                           meeting.ends_at.strftime("-%R"))
-
+            if meeting_starts_within_other?(meeting)
+              produce_meeting_date_collision_error(meeting, :starts_at)
             # does it end within other meeting time?
-            elsif ends_at >= meeting.starts_at && ends_at <= meeting.ends_at
-              errors.add(:ends_at,  ' - There is another meeting between ' +
-                            meeting.starts_at.strftime("%R") +
-                                             meeting.ends_at.strftime("-%R"))
-
+            elsif meeting_ends_within_other?(meeting)
+              produce_meeting_date_collision_error(meeting, :ends_at)
             # does it run through other meeting time?
-            elsif starts_at <= meeting.starts_at && ends_at >= meeting.ends_at
-              errors.add(:starts_at, ' - There is another meeting between ' +
-                            meeting.starts_at.strftime("%R") +
-                                             meeting.ends_at.strftime("-%R"))
+            elsif meeting_runs_through_other?(meeting)
+              produce_meeting_date_collision_error(meeting, :starts_at)
             end
           end
-        end
+        #end
       end
-    #end
+    end
   end
 
   # Until there's no nice date picking tool let's check if meeting has proper start-end times

@@ -6,16 +6,23 @@ gem 'rails', '3.0.7'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
-
 gem 'haml-rails'
 
-gem 'rspec-rails'
-
-gem 'annotate', '2.4.0'
-
 gem 'gcal4ruby'
-
 gem 'gdata4ruby'
+gem 'will_paginate'
+
+group :development do
+  gem 'rspec-rails'
+  gem 'annotate', '2.4.0'
+  gem 'faker'
+end
+
+group :test do
+  gem 'rspec-rails'
+  gem 'spork'
+  gem 'factory_girl_rails', '1.0'
+end
 
 # Use unicorn as the web server
 # gem 'unicorn'

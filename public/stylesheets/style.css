@@ -34,8 +34,8 @@ div#content h3  {
     margin-top: 15px;
 }
 div#footer-debug  {
-    position: absolute;
-    bottom: 10px;
+    position: relative;
+    bottom: -30px;
     left: 10px;
     width: 500px;
 }
