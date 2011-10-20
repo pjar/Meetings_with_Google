@@ -5,14 +5,15 @@
       %ul
         - @meeting.errors.full_messages.each do |msg|
           %li= msg
-
   .field
-    = f.label :starts_at
-    = f.datetime_select :starts_at, :minute_step => 15, :default => Time.now
+    = f.label :meeting_date, "Day"
+    = f.text_field :meeting_date
   .field
-    = f.label :ends_at
-    = f.datetime_select :ends_at , :minute_step => 15  , :discard_year => true, :discard_month => true,
-                        :default => Time.now + 1.hour
+    = f.label :start_time
+    = f.text_field :start_time
+  .field
+    = f.label :end_time
+    = f.text_field :end_time
   .field
     = f.label :title
     = f.text_field :title
@@ -21,7 +22,7 @@
     = f.text_area :description
   .field
     = f.label :place
-    = f.select  :place, options_for_select(Meeting.places, :place), {:include_blank => true}
+    = f.select  :place, options_for_select(Meeting.places_sorted_by_times_used, :place), {:include_blank => true}
   .field
     = f.label :place
     = f.text_field :place

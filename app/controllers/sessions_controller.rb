@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
   def destroy
    # store_location
     session[:user_id] = nil
-    redirect_to request.referer.nil? ? home_path : request.referer
+    redirect_to request.referer.nil? ? root_path : request.referer
   end
 
 end

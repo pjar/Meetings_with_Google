@@ -38,18 +38,18 @@ class Participation < ActiveRecord::Base
 
 #### !!!! TODO:Change it! Very primitive validation for Participation
     Participation.all.each do |p|
-      if self.user.eql?(p.user)
-        if !self.meeting.eql?(p.meeting)
-          if self.meeting.starts_at >= p.meeting.starts_at && self.meeting.starts_at <= p.meeting.ends_at
-            self.destroy
+      if user.eql?(p.user)
+        if !meeting.eql?(p.meeting)
+          if meeting.starts_at >= p.meeting.starts_at && meeting.starts_at <= p.meeting.ends_at
+            destroy
             return false
             # does it end within other meeting time?
-            elsif self.meeting.ends_at >= p.meeting.starts_at && self.meeting.ends_at <= p.meeting.ends_at
-              self.destroy
+            elsif meeting.ends_at >= p.meeting.starts_at && meeting.ends_at <= p.meeting.ends_at
+              destroy
               return false
             # does it run through other meeting time?
-            elsif self.meeting.starts_at <= p.meeting.starts_at && self.meeting.ends_at >= p.meeting.ends_at
-              self.destroy
+            elsif meeting.starts_at <= p.meeting.starts_at && meeting.ends_at >= p.meeting.ends_at
+              destroy
               return false
           end
         end
@@ -73,6 +73,8 @@ class Participation < ActiveRecord::Base
     meeting.participations(true)
     user.participations(true)
   end
+
+
 
 protected
 

@@ -1,5 +1,8 @@
 MeetingsWithGoogle::Application.routes.draw do
 
+
+
+
  # get "participations/new"
 
   get "participations/create"
@@ -8,11 +11,11 @@ MeetingsWithGoogle::Application.routes.draw do
 
   get "participations/destroy"
 
-  get "pages/index"
+  #get "pages/index"
 
-  get "pages/show"
+  #get "pages/show"
 
-  get "sessions/new"
+  #get "sessions/new"
 
   resources :meetings
 
@@ -24,10 +27,15 @@ MeetingsWithGoogle::Application.routes.draw do
 
   resources :participations
 
+  resources :google_synchronizations, :only => [:new]
+
   match '/signup',  :to => 'users#new'
   match '/signin',  :to => 'sessions#new'
   match '/signout', :to => 'sessions#destroy'
-  match '/home',        :to => 'pages#index'
+  match '/gsync',   :to => 'google_synchronizations#new'
+  match '/gread',   :to => 'google_synchronizations#read_remote_calendar'
+
+  root              :to => 'pages#index'
 
 
   # The priority is based upon order of creation:

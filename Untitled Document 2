@@ -1,0 +1,2 @@
+m = Meeting.find(30)
+puts m

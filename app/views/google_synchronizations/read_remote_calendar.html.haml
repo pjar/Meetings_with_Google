@@ -1,0 +1,25 @@
+%h1 Listing meetings
+
+%table
+  %tr
+    %th
+    %th Meeting time
+    %th
+    %th Title
+    %th Place
+    %th Tutor
+    %th Places
+    %th
+    %th
+    %th
+
+  - @meetings.each do |meeting|
+    %tr
+      %td #{meeting[:starts_at]}
+      %td #{meeting[:ends_at]}
+      %td
+      %td= meeting[:title]
+      %td= meeting[:place]
+      %td= meeting[:total_places]
+
+

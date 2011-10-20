@@ -15,7 +15,7 @@
 
   - @meetings.each do |meeting|
     %tr
-      %td #{meeting.start_day}
+      %td #{meeting.meeting_date}
       %td #{meeting.start_time} to #{meeting.end_time}
       %td
       %td= meeting.title
@@ -29,13 +29,13 @@
         %td= link_to 'Show', meeting_or_participation(meeting)
         -if admin?
           %td= link_to 'Edit', edit_meeting_path(meeting)
-          %td= link_to 'Destroy', meeting, :confirm => 'Are you sure?', :method => :delete
+          %td= button_to 'Destroy', meeting , :confirm => 'Are you sure?', :method => :delete
         -else
           -if @user.already_participates(meeting)
-            %td= link_to  "Resign", {:controller => "participations", :action => "destroy",
-                                    :meeting_id => meeting.id, :user_id => @user.id}
+            %td= button_to  "Resign", {:controller => "participations", :action => "destroy",
+                                    :meeting_id => meeting.id, :user_id => @user.id}, :method => :delete
           -else
-            %td= link_to  'Attend', participation_params(meeting, false)
+            %td= link_to  "Attend", participation_params(meeting, false)
             -if meeting.has_no_host?
               %td= link_to 'Host', participation_params(meeting, true)
 

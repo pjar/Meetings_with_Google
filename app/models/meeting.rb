@@ -3,32 +3,38 @@
 #
 # Table name: meetings
 #
-#  id                 :integer         not null, primary key
-#  starts_at          :datetime
-#  ends_at            :datetime
-#  title              :string(255)
-#  description        :text
-#  place              :string(255)
-#  total_places       :integer
-#  google_event_id    :string(255)
-#  google_sync_status :string(255)
-#  created_at         :datetime
-#  updated_at         :datetime
+#  id                     :integer         not null, primary key
+#  starts_at              :datetime
+#  ends_at                :datetime
+#  title                  :string(255)
+#  description            :text
+#  place                  :string(255)
+#  total_places           :integer
+#  google_event_id        :string(255)
+#  created_at             :datetime
+#  updated_at             :datetime
+#  up_to_date_with_google :boolean         default(FALSE)
+#  deleted                :boolean         default(FALSE)
 #
 
 
 
 class Meeting < ActiveRecord::Base
 
-  # it allows tracking changes in models - see declaration of validations
+  # it allows tracking changes in model objects - see declaration of validations
   include ActiveModel::Dirty
+
+
 
   has_many    :participations, :dependent => :destroy
   has_many    :users, :through => :participations
 
   attr_accessible :starts_at, :ends_at, :title, :description,
                   :place, :tutor, :available_places, :total_places,
-                  :google_event_id, :google_sync_status
+                  :google_event_id, :up_to_date_with_google, :deleted
+
+
+  scope :all_active, where(:deleted => false)
 
   validate  :dates_cannot_collide
   validate  :cannot_end_before_start
@@ -42,6 +48,16 @@ class Meeting < ActiveRecord::Base
   def self.new_meeting(params)
     params = ends_at_param_builder(params)
     Meeting.new(params)
+  end
+
+  def save_with_sync
+    sync = GoogleSynchronization.new
+    if save
+      update_attributes(:up_to_date_with_google => false)
+      sync.update_google_cal(self)
+      update_attributes(:up_to_date_with_google => true)
+      true
+    end
   end
 
 ### end of CREATING Meeting
@@ -66,28 +82,56 @@ class Meeting < ActiveRecord::Base
 
   ## uses a method to construct proper params - it's due ugly datetime select in update_meeting form
 
-  def update_meeting_attrs(params)
+  def update_meeting_attrs_and_sync(params)
     params = ends_at_param_builder(params)
-    self.update_attributes(params)
+    sync = GoogleSynchronization.new
+    if update_attributes(params)
+      update_attributes(:up_to_date_with_google => false)
+      sync.update_google_cal(self)
+      update_attributes(:up_to_date_with_google => true)
+      true
+    end
   end
 
 ### end of UPDATING Meeting
 
+##############################################
 
+### DESTROYING Meeting
+
+   def destroy_and_sync
+     update_attributes(:deleted => true)
+     sync = GoogleSynchronization.new
+     sync.update_google_cal(self)
+     destroy
+   end
+
+### end of DESTROYING Meeting
 
 #### Date formatting
 
-  def start_day
-    self.starts_at.strftime("%d %b")
+  def meeting_date
+    starts_at.strftime("%d %b") unless starts_at.nil?
+  end
+
+  def meeting_date=(date)
+    date
   end
 
   def start_time
-    self.starts_at.to_s(:time)
+    starts_at.to_s(:time) unless starts_at.nil?
   end
 
+  def start_time=(time)
+    time
+  end
 
   def end_time
-    self.ends_at.to_s(:time)
+    ends_at.to_s(:time)   unless ends_at.nil?
+  end
+
+  def end_time=(time)
+    time
   end
 
 #  def duration
@@ -97,19 +141,18 @@ class Meeting < ActiveRecord::Base
 #### end of Date formatting
 
   def has_no_host?
-    !self.host_presence
+    !self.host_present?
   end
 
   def available_places
-    self.total_places - self.participations.size
+    total_places - participations.size
   end
 
   def host
-    if host_presence
+    if host_present?
       participations.each do |p|
         if p.user_as_host
-          user = User.find(p.user)
-          return user
+          return p.user
         end
       end
     end
@@ -122,6 +165,28 @@ class Meeting < ActiveRecord::Base
     attendees
   end
 
+  def attendees_hash
+    if attendees.empty?
+      return []
+    end
+    attendees.inject([]) do |result,element|
+      hash = {}
+      hash[:name] = element.name
+      hash[:email] = element.email
+      result << hash
+    end
+  end
+
+
+  def description_for_google_calendar
+    self.description += "\n"
+    if host.present?
+      self.description += "\nTutor: #{host.email}"
+    end
+    self.description += "\nMeeting ID: #{id}"
+  end
+
+
 protected
 
   # building ends_at date from date only component of starts_at and time only component of ends_at
@@ -131,7 +196,7 @@ protected
 
 
 
-  def host_presence
+  def host_present?
       participations.each do |p|
         if p.user_as_host
           return true
@@ -140,35 +205,58 @@ protected
     false
   end
 
-
-  # I know it's ridiculous to have 2 same methods - I still don't get how to operate
-  # properly with self
+  # I know it's ridiculous to have 2 same methods
+  # Any way to have same method for class and object?
   def self.ends_at_param_builder(params)
-    if !params["ends_at(1i)"].nil?
-      params["ends_at(1i)"] = params["starts_at(1i)"]
-      params["ends_at(2i)"] = params["starts_at(2i)"]
-      params["ends_at(3i)"] = params["starts_at(3i)"]
-      params["ends_at(4i)"] = params["ends_at(4i)"]
-      params["ends_at(5i)"] = params["ends_at(5i)"]
+    start_date = params[:meeting_date] + " " + params[:start_time]
+
+    if params[:start_time] > params[:end_time]
+      meeting_end_date = (Date.parse( params[:meeting_date] ) + 1.day ).to_s
+      end_date =  meeting_end_date + " " + params[:end_time]
+    else
+      end_date =  params[:meeting_date] + " " + params[:end_time]
     end
+
+    params[:starts_at] = DateTime.parse( start_date )
+    params[:ends_at]  = DateTime.parse( end_date )
     params
   end
 
   def ends_at_param_builder(params)
-    if !params["ends_at(1i)"].nil?
-      params["ends_at(1i)"] = params["starts_at(1i)"]
-      params["ends_at(2i)"] = params["starts_at(2i)"]
-      params["ends_at(3i)"] = params["starts_at(3i)"]
-      params["ends_at(4i)"] = params["ends_at(4i)"]
-      params["ends_at(5i)"] = params["ends_at(5i)"]
+    start_date = params[:meeting_date] + " " + params[:start_time]
+
+    if params[:start_time] > params[:end_time]
+      meeting_end_date = (Date.parse( params[:meeting_date] ) + 1.day ).to_s
+      end_date =  meeting_end_date + " " + params[:end_time]
+    else
+      end_date =  params[:meeting_date] + " " + params[:end_time]
     end
+
+    params[:starts_at] = DateTime.parse( start_date )
+    params[:ends_at]  = DateTime.parse( end_date )
     params
   end
 
   def self.places
     places = []
-    Meeting.all.collect {|m| places << m.place}
-    places.uniq
+    Meeting.all_active.collect {|m| places << m.place}
+    places
+  end
+
+  def self.places_sorted_by_times_used
+
+    hash = Meeting.places.inject({}) do | result, array_value |
+	    key_from_array_value = array_value.downcase.gsub(/\s+/, "_").to_sym
+	    if result.has_key?( key_from_array_value )
+	      result[ key_from_array_value ] += 1
+	    else
+	      result[ key_from_array_value ] = 1
+	    end
+	  result
+    end
+
+    array = hash.sort.inject([]) { |result,hash_element| result << hash_element.first.to_s }
+
   end
 
 
@@ -202,11 +290,10 @@ protected
 
   # Check if there is no other meeting in that time
   def dates_cannot_collide
-
-    # let's check if date or place has changed - if not then dont bother with validatiot
+   # let's check if date or place has changed - if not then dont bother with validatiot
     if starts_at_changed? || ends_at_changed? || place_changed?
-      Meeting.all.each do |meeting|
-        #if not_comparing_same_meetings?(meeting)
+      Meeting.all_active.each do |meeting|
+        if not_comparing_same_meetings?(meeting)
           if comparing_meetings_with_same_venue?(meeting)
             # does it start within other meeting time?
             # TODO: DRY it out
@@ -220,7 +307,7 @@ protected
               produce_meeting_date_collision_error(meeting, :starts_at)
             end
           end
-        #end
+        end
       end
     end
   end
@@ -234,6 +321,3 @@ protected
     end
   end
 end
-
-
-

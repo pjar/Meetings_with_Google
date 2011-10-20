@@ -1,14 +1,3 @@
-# == Schema Information
-#
-# Table name: users
-#
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  email      :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 
 class User < ActiveRecord::Base
 
@@ -48,10 +37,6 @@ class User < ActiveRecord::Base
     find(user_id)
   end
 
-  def self.find_all_users
-    all
-  end
-
 ### end of READING User
 
 ##############################################
@@ -84,13 +69,26 @@ class User < ActiveRecord::Base
 ### end of Authenticating User
 
   def already_participates(meeting)
-    self.meetings.include?(meeting)
+    self.meetings.all_active.include?(meeting)
   end
 
   def attends_any_meetings?
-    !self.meetings.empty?
+    !self.meetings.all_active.empty?
   end
 
 end
 
+
+
+
+# == Schema Information
+#
+# Table name: users
+#
+#  id         :integer         not null, primary key
+#  name       :string(255)
+#  email      :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
 

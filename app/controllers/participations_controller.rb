@@ -34,7 +34,7 @@ class ParticipationsController < ApplicationController
   def index
     if signed_in?
       @user = User.find(session[:user_id])
-      @meetings = @user.meetings
+      @meetings = @user.meetings.all_active
     else
       respond_to do |format|
 

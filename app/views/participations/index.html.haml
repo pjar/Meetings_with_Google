@@ -12,10 +12,10 @@
     %th
     %th
     %th
-
+  -# TODO: DRY it out (duplication with meetings and participations index)
   - @meetings.each do |meeting|
     %tr
-      %td #{meeting.start_day}
+      %td #{meeting.meeting_date}
       %td #{meeting.start_time} to #{meeting.end_time}
       %td
       %td= meeting.title
@@ -28,9 +28,9 @@
       - if signed_in?
         %td= link_to 'Show', meeting_or_participation(meeting)
         -if @user.already_participates(meeting)
-          %td= link_to  "Resign", {:controller => "participations", :action => "destroy",
-                                    :meeting_id => meeting.id, :user_id => @user.id}
+          %td= button_to  "Resign", {:controller => "participations", :action => "destroy",
+                                    :meeting_id => meeting.id, :user_id => @user.id }, :method => :delete
         -else
           %td= link_to  'Attend', participation_params(meeting, false)
           -if meeting.has_no_host?
-            %td= link_to 'Host', participation_params(meeting, true)
+            %td= button_to 'Host', participation_params(meeting, true)

@@ -5,7 +5,7 @@ class MeetingsController < ApplicationController
   # GET /meetings
   # GET /meetings.xml
   def index
-    @meetings = Meeting.order("starts_at ASC")
+    @meetings = Meeting.all_active.order("starts_at ASC")
     if signed_in?
       @user = User.find(session[:user_id])
     end
@@ -49,7 +49,7 @@ class MeetingsController < ApplicationController
     @meeting = Meeting.new_meeting(params[:meeting])
 
     respond_to do |format|
-      if @meeting.save
+      if @meeting.save_with_sync
         format.html { redirect_to(meetings_url, :notice => 'Meeting was successfully created.') }
         format.xml  { render :xml => @meeting, :status => :created, :location => @meeting }
       else
@@ -65,7 +65,7 @@ class MeetingsController < ApplicationController
     @meeting = Meeting.find(params[:id])
 
     respond_to do |format|
-      if @meeting.update_meeting_attrs(params[:meeting])
+      if @meeting.update_meeting_attrs_and_sync(params[:meeting])
         format.html { redirect_to(meetings_url, :notice => 'Meeting was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -79,7 +79,7 @@ class MeetingsController < ApplicationController
   # DELETE /meetings/1.xml
   def destroy
     @meeting = Meeting.find(params[:id])
-    @meeting.destroy
+    @meeting.destroy_and_sync
 
     respond_to do |format|
       format.html { redirect_to(meetings_url) }

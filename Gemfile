@@ -11,6 +11,7 @@ gem 'haml-rails'
 gem 'gcal4ruby'
 gem 'gdata4ruby'
 gem 'will_paginate'
+gem 'jquery-rails'
 
 group :development do
   gem 'rspec-rails'

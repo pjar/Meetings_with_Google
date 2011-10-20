@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110820220228) do
+ActiveRecord::Schema.define(:version => 20111020201930) do
 
   create_table "meetings", :force => true do |t|
     t.datetime "starts_at"
@@ -20,9 +20,10 @@ ActiveRecord::Schema.define(:version => 20110820220228) do
     t.string   "place"
     t.integer  "total_places"
     t.string   "google_event_id"
-    t.string   "google_sync_status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "up_to_date_with_google", :default => false
+    t.boolean  "deleted",                :default => false
   end
 
   create_table "participations", :force => true do |t|
