@@ -158,12 +158,16 @@ class Meeting < ActiveRecord::Base
 
 #### end of Date formatting
 
+  def has_free_places?
+    available_places > 0 ? true : false
+  end
+
   def has_no_host?
     !self.host_present?
   end
 
   def available_places
-    total_places - participations.size
+    total_places - participations.without_host.size
   end
 
   def host
@@ -178,7 +182,11 @@ class Meeting < ActiveRecord::Base
 
   def attendees(with_host = false)
     attendees = []
-    attenders = with_host ? participations : participations.without_host
+    attenders = with_host ? participations : if participations.empty?
+                                                participations
+                                             else
+                                                participations.without_host
+                                             end
     attenders.collect { |p| attendees << p.user }
     attendees
   end
@@ -198,11 +206,12 @@ class Meeting < ActiveRecord::Base
 
 
   def description_for_google_calendar
-    self.description += "\n"
+    description_content = self.description.dup
+    description_content += "\n"
     if host.present?
-      self.description += "\nTutor: #{host.email}"
+      description_content += "\nTutor: #{host.email}"
     end
-    self.description += "\nMeeting ID: #{id}"
+    description_content += "\nMeeting ID: #{id}"
   end
 
 
@@ -275,7 +284,9 @@ protected
 
     hash = hash.sort_by { |element| element.last }
 
-    array = hash.reverse.inject([]) { |result,hash_element| result << hash_element.first.to_s }
+    array = hash.reverse.inject([]) do |result,hash_element|
+      result << hash_element.first.to_s.capitalize
+    end
 
 
 

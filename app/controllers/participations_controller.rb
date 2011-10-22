@@ -4,6 +4,8 @@ class ParticipationsController < ApplicationController
 
   def new
     @participation = Participation.new
+    #@user_note = @participation.build_user_note
+
     @meeting = Meeting.find(params[:meeting_id])
     @user = User.find(session[:user_id])
     @user_as_host = params[:user_as_host]

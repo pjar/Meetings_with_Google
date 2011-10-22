@@ -3,6 +3,26 @@ MeetingsWithGoogle::Application.routes.draw do
 
 
 
+  get "user_notes/new"
+
+  get "user_notes/create"
+
+  get "user_notes/show"
+
+  get "user_notes/update"
+
+  get "user_notes/destroy"
+
+  get "usernotes/new"
+
+  get "usernotes/create"
+
+  get "usernotes/show"
+
+  get "usernotes/update"
+
+  get "usernotes/destroy"
+
  # get "participations/new"
 
   get "participations/create"
@@ -25,15 +45,14 @@ MeetingsWithGoogle::Application.routes.draw do
 
   resource  :pages, :only => [:index, :show]
 
-  resources :participations
-
+  resources :participations do
+    resources :user_notes
+  end
   resources :google_synchronizations, :only => [:new]
 
   match '/signup',  :to => 'users#new'
   match '/signin',  :to => 'sessions#new'
   match '/signout', :to => 'sessions#destroy'
-  match '/gsync',   :to => 'google_synchronizations#new'
-  match '/gread',   :to => 'google_synchronizations#read_remote_calendar'
 
   root              :to => 'pages#index'
 

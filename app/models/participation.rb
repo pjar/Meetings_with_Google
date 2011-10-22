@@ -16,8 +16,13 @@ class Participation < ActiveRecord::Base
 
   belongs_to  :user
   belongs_to  :meeting
+  has_one     :user_note, :dependent => :destroy
 
   attr_accessor :user_id, :meeting_id
+
+  accepts_nested_attributes_for :user_note
+
+  attr_accessible  :user_note_attributes
 
   validate  :no_double_users
   # validate  :no_colliding_meetings_for_user

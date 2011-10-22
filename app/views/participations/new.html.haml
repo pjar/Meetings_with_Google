@@ -9,17 +9,24 @@
     %tr
       %td= user.name
 
+-if @user.already_participates(@meeting)
+  %h4 Add your notes
+  = fields_for :user_note do |builder|
+    .field
+      = builder.text_area :note, :rows => 3
+      = button_to "Save", :url => { :controller => "user_notes", :action => "create" }, :remote => true
 
 
 -if @user.already_participates(@meeting)
-  = button_to  "Resign", {:action => "destroy", :meeting_id => @meeting.id, :user_id => @user.id}
+  = button_to  "Resign", {:controller => "participations", :action => "destroy",
+                          :meeting_id => @meeting.id, :user_id => session[:user_id] }, :method => :delete
 -else
   -if @meeting.has_no_host?
     = link_to 'Host', {:action => "create", :user_as_host => true,
                         :meeting_id => @meeting.id, :user_id => session[:user_id]}
     \|
-
-  = link_to  "Attend", {:action => "create", :meeting_id => @meeting.id,
+  -if  @meeting.has_free_places?
+    = link_to  "Attend", {:action => "create", :meeting_id => @meeting.id,
                          :user_id => session[:user_id]}
 \|
 = link_to "Back", meetings_path

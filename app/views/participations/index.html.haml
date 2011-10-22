@@ -31,6 +31,7 @@
           %td= button_to  "Resign", {:controller => "participations", :action => "destroy",
                                     :meeting_id => meeting.id, :user_id => @user.id }, :method => :delete
         -else
-          %td= link_to  'Attend', participation_params(meeting, false)
+          -if meeting.has_free_places?
+            %td= link_to  'Attend', participation_params(meeting, false)
           -if meeting.has_no_host?
             %td= button_to 'Host', participation_params(meeting, true)

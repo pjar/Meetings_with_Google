@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111020201930) do
+ActiveRecord::Schema.define(:version => 20111022152753) do
 
   create_table "meetings", :force => true do |t|
     t.datetime "starts_at"
@@ -36,6 +36,13 @@ ActiveRecord::Schema.define(:version => 20111020201930) do
   end
 
   add_index "participations", ["user_id", "meeting_id"], :name => "index_participations_on_user_id_and_meeting_id"
+
+  create_table "user_notes", :force => true do |t|
+    t.integer  "participation_id"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"
