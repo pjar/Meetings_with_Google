@@ -57,7 +57,7 @@ class Meeting < ActiveRecord::Base
   end
 
   def save_with_sync
-    if save
+    if self.save
       update_status_and_sync( :up_to_date_with_google => false )
       true
     else

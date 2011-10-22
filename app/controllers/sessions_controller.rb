@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
     sign_in( User.find_user(params[:session][:user_id]) )
     where_to_redirect = session[:previous_page]
     session[:previous_page] = nil
-    redirect_to where_to_redirect.nil? ? home_path  : where_to_redirect
+    redirect_to where_to_redirect.nil? ? root_path  : where_to_redirect
   end
 
   def destroy
