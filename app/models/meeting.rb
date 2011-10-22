@@ -36,6 +36,12 @@ class Meeting < ActiveRecord::Base
 
   scope :all_active, where(:deleted => false)
 
+  scope :deleted, where( :deleted => true )
+
+  scope :outdated, where( :up_to_date_with_google => false )
+
+  scope :all_needing_update, where("deleted = ? OR up_to_date_with_google = ?", true, false)
+
   validate  :dates_cannot_collide
   validate  :cannot_end_before_start
 
@@ -45,18 +51,17 @@ class Meeting < ActiveRecord::Base
 ### CREATING Meeting
 
   ## uses a method to construct proper params - it's due ugly datetime select in new_meeting form
-  def self.new_meeting(params)
-    params = ends_at_param_builder(params)
-    Meeting.new(params)
+  def self.new_meeting( params )
+    params = ends_at_param_builder( params )
+    Meeting.new( params )
   end
 
   def save_with_sync
-    sync = GoogleSynchronization.new
     if save
-      update_attributes(:up_to_date_with_google => false)
-      sync.update_google_cal(self)
-      update_attributes(:up_to_date_with_google => true)
+      update_status_and_sync( :up_to_date_with_google => false )
       true
+    else
+      false
     end
   end
 
@@ -69,8 +74,8 @@ class Meeting < ActiveRecord::Base
 
 ### READING Meeting
 
-  def self.find_meeting(params)
-    @meeting ||= Meeting.find(params)
+  def self.find_meeting( params )
+    @meeting ||= Meeting.find( params )
   end
 
 ### end of READING Meeting
@@ -82,14 +87,25 @@ class Meeting < ActiveRecord::Base
 
   ## uses a method to construct proper params - it's due ugly datetime select in update_meeting form
 
-  def update_meeting_attrs_and_sync(params)
-    params = ends_at_param_builder(params)
+  def update_status_and_sync( status )
+    update_attributes( status )
     sync = GoogleSynchronization.new
-    if update_attributes(params)
-      update_attributes(:up_to_date_with_google => false)
-      sync.update_google_cal(self)
-      update_attributes(:up_to_date_with_google => true)
+    if sync.update_google_cal
+      update_attributes( :up_to_date_with_google => true )
       true
+    else
+      false
+    end
+
+  end
+
+  def update_attributes_with_sync( params )
+    params = ends_at_param_builder( params )
+    if update_attributes( params )
+      update_status_and_sync( :up_to_date_with_google => false )
+      true
+    else
+      false
     end
   end
 
@@ -99,12 +115,14 @@ class Meeting < ActiveRecord::Base
 
 ### DESTROYING Meeting
 
-   def destroy_and_sync
-     update_attributes(:deleted => true)
-     sync = GoogleSynchronization.new
-     sync.update_google_cal(self)
-     destroy
-   end
+  def destroy_and_sync
+    if update_status_and_sync(:deleted => true)
+      self.destroy
+      true
+    else
+     false
+    end
+  end
 
 ### end of DESTROYING Meeting
 
@@ -156,20 +174,21 @@ class Meeting < ActiveRecord::Base
         end
       end
     end
-
   end
 
-  def attendees
+  def attendees(with_host = false)
     attendees = []
-    participations.where(:user_as_host => false).collect { |p| attendees << p.user }
+    attenders = with_host ? participations : participations.without_host
+    attenders.collect { |p| attendees << p.user }
     attendees
   end
 
-  def attendees_hash
-    if attendees.empty?
+
+  def attendees_hash(with_host = false)
+    if attendees(with_host).empty?
       return []
     end
-    attendees.inject([]) do |result,element|
+    attendees(with_host).inject([]) do |result,element|
       hash = {}
       hash[:name] = element.name
       hash[:email] = element.email
@@ -209,7 +228,6 @@ protected
   # Any way to have same method for class and object?
   def self.ends_at_param_builder(params)
     start_date = params[:meeting_date] + " " + params[:start_time]
-
     if params[:start_time] > params[:end_time]
       meeting_end_date = (Date.parse( params[:meeting_date] ) + 1.day ).to_s
       end_date =  meeting_end_date + " " + params[:end_time]
@@ -217,8 +235,8 @@ protected
       end_date =  params[:meeting_date] + " " + params[:end_time]
     end
 
-    params[:starts_at] = DateTime.parse( start_date )
-    params[:ends_at]  = DateTime.parse( end_date )
+    params[:starts_at] = Time.parse( start_date )
+    params[:ends_at]  = Time.parse( end_date )
     params
   end
 
@@ -232,8 +250,8 @@ protected
       end_date =  params[:meeting_date] + " " + params[:end_time]
     end
 
-    params[:starts_at] = DateTime.parse( start_date )
-    params[:ends_at]  = DateTime.parse( end_date )
+    params[:starts_at] = Time.parse( start_date )
+    params[:ends_at]  = Time.parse( end_date )
     params
   end
 
@@ -255,7 +273,11 @@ protected
 	  result
     end
 
-    array = hash.sort.inject([]) { |result,hash_element| result << hash_element.first.to_s }
+    hash = hash.sort_by { |element| element.last }
+
+    array = hash.reverse.inject([]) { |result,hash_element| result << hash_element.first.to_s }
+
+
 
   end
 

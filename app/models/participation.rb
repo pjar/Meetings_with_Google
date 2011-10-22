@@ -22,6 +22,10 @@ class Participation < ActiveRecord::Base
   validate  :no_double_users
   # validate  :no_colliding_meetings_for_user
 
+  scope :without_host, where( :user_as_host => false )
+
+
+
   def create_participation( meeting_id, user_id, user_as_host)
 
     if user_as_host
@@ -35,6 +39,8 @@ class Participation < ActiveRecord::Base
 
     @meeting = Meeting.find(meeting_id)
     @meeting.participations << self
+
+
 
 #### !!!! TODO:Change it! Very primitive validation for Participation
     Participation.all.each do |p|
@@ -58,8 +64,12 @@ class Participation < ActiveRecord::Base
 ################################### End of PRIMITIVE VALIDATION #######################
 
     self.save
+
+    @meeting.update_status_and_sync( :up_to_date_with_google => false )
+
     true
   end
+
 
 
   def self.find_participation(meeting_id, user_id)
@@ -72,6 +82,9 @@ class Participation < ActiveRecord::Base
     self.destroy
     meeting.participations(true)
     user.participations(true)
+
+    @meeting.update_status_and_sync( :up_to_date_with_google => false )
+
   end
 
 

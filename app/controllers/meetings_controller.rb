@@ -38,12 +38,7 @@ class MeetingsController < ApplicationController
     end
   end
 
-  # GET /meetings/1/edit
-  def edit
-    @meeting = Meeting.find(params[:id])
-  end
-
-  # POST /meetings
+# POST /meetings
   # POST /meetings.xml
   def create
     @meeting = Meeting.new_meeting(params[:meeting])
@@ -59,13 +54,20 @@ class MeetingsController < ApplicationController
     end
   end
 
+
+  # GET /meetings/1/edit
+  def edit
+    @meeting = Meeting.find(params[:id])
+  end
+
+
   # PUT /meetings/1
   # PUT /meetings/1.xml
   def update
     @meeting = Meeting.find(params[:id])
 
     respond_to do |format|
-      if @meeting.update_meeting_attrs_and_sync(params[:meeting])
+      if @meeting.update_attributes_with_sync(params[:meeting])
         format.html { redirect_to(meetings_url, :notice => 'Meeting was successfully updated.') }
         format.xml  { head :ok }
       else

@@ -15,7 +15,7 @@
 
 class GoogleSynchronization
 
-
+  include ActiveSupport::Rescuable
 
 
 
@@ -32,7 +32,7 @@ class GoogleSynchronization
     event.title       = meeting.title
     event.where       = meeting.place
     event.content     = meeting.description_for_google_calendar
-    event.attendees   = meeting.attendees_hash
+    event.attendees   = meeting.attendees_hash(true)
     if event.save
       meeting.update_attributes(:google_event_id => event.id)
       true
@@ -43,7 +43,14 @@ class GoogleSynchronization
 
   def delete_event(meeting)
     event = GCal4Ruby::Event.find(@service, :id => meeting.google_event_id)
-    event.delete
+     if event.status != :canceled
+      event.delete
+      true
+      elsif event.status == :canceled
+      meeting.destroy
+      true
+    end
+
   end
 
   def update_event(meeting)
@@ -53,23 +60,23 @@ class GoogleSynchronization
   end
 
 
-  def update_google_cal(meeting)
-      if authenticate
-        if meeting.google_event_id.nil?
+
+  def update_google_cal
+     authenticate
+     Meeting.all_needing_update.each do |meeting|
+       if meeting.google_event_id.nil?
           create_event(meeting)
-          true
-        elsif !meeting.up_to_date_with_google
-          update_event(meeting)
           true
         elsif meeting.deleted
           delete_event(meeting)
           true
-        else
-          false
+        elsif !meeting.up_to_date_with_google
+          update_event(meeting)
+          true
         end
-      else
-        false
       end
+  rescue Exception => e
+    false
   end
 
   def authenticate

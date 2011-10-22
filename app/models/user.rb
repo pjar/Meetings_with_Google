@@ -54,7 +54,9 @@ class User < ActiveRecord::Base
 ### DESTROYING User
 
   def destroy_user
+    meetings_for_update = self.meetings.inject([]) { |res, val| res << val }
     destroy
+    meetings_for_update.each { |meeting| meeting.update_status_and_sync( :up_to_date_with_google => false )}
   end
 
 ### end of DESTROYING User
