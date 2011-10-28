@@ -12,17 +12,22 @@ gem 'gcal4ruby'
 gem 'gdata4ruby'
 gem 'will_paginate'
 gem 'jquery-rails'
+gem 'guard'
+
+
 
 group :development do
   gem 'rspec-rails'
   gem 'annotate', '2.4.0'
   gem 'faker'
+  gem 'guard-livereload'
 end
 
 group :test do
   gem 'rspec-rails'
   gem 'spork'
   gem 'factory_girl_rails', '1.0'
+  gem 'guard-rspec'
 end
 
 # Use unicorn as the web server

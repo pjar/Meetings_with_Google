@@ -29,10 +29,12 @@ class Meeting < ActiveRecord::Base
   has_many    :participations, :dependent => :destroy
   has_many    :users, :through => :participations
 
-  attr_accessible :starts_at, :ends_at, :title, :description,
+  attr_accessible   :starts_at, :ends_at, :title, :description,
                   :place, :tutor, :available_places, :total_places,
-                  :google_event_id, :up_to_date_with_google, :deleted
+                  :google_event_id, :up_to_date_with_google, :deleted,
+                  :start_time, :end_time, :meeting_date
 
+  #attr_accessible :start_time, :end_time, :meeting_date
 
   scope :all_active, where(:deleted => false)
 
@@ -128,8 +130,12 @@ class Meeting < ActiveRecord::Base
 
 #### Date formatting
 
-  def meeting_date
-    starts_at.strftime("%d %b") unless starts_at.nil?
+  def meeting_date( part = nil )
+    if part
+      starts_at.send( :strftime, "#{part}" )
+    else
+      starts_at.strftime("%d %b") unless starts_at.nil?
+    end
   end
 
   def meeting_date=(date)

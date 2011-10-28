@@ -1,45 +1,35 @@
 %h1 Listing meetings
-
-%table
-  %tr
-    %th
-    %th Meeting time
-    %th
-    %th Title
-    %th Place
-    %th Tutor
-    %th Places
-    %th
-    %th
-    %th
-
-  - @meetings.each do |meeting|
-    %tr
-      %td #{meeting.meeting_date}
-      %td #{meeting.start_time} to #{meeting.end_time}
-      %td
-      %td= meeting.title
-      %td= meeting.place
-      -if meeting.has_no_host?
-        %td
-      -else
-        %td= meeting.host.name
-      %td= meeting.available_places
-      - if signed_in?
-        %td= link_to 'Show', meeting_or_participation(meeting)
-        -if admin?
-          %td= link_to 'Edit', edit_meeting_path(meeting)
-          %td= button_to 'Destroy', meeting , :confirm => 'Are you sure?', :method => :delete
-        -else
-          -if @user.already_participates(meeting)
-            %td= button_to  "Resign", {:controller => "participations", :action => "destroy",
-                                    :meeting_id => meeting.id, :user_id => @user.id}, :method => :delete
-          -else
-            -if meeting.has_no_host?
-              %td= link_to 'Host', participation_params(meeting, true)
-            -if meeting.has_free_places?
-              %td= link_to  "Attend", participation_params(meeting, false)
-
-%br
+.bottom-buttons-and-links
 - if admin?
-  = link_to 'New Meeting', new_meeting_path
+  = link_to "New Meeting", new_meeting_path
+
+
+#meetings-list
+  - @meetings.each do |meeting|
+    #meeting-box
+      .date
+        %strong
+          = meeting.meeting_date( MONTH )
+        %big
+          = meeting.meeting_date( DAY )
+        %small
+          = meeting.meeting_date( YEAR )
+      .time-span
+        #{meeting.start_time} to #{meeting.end_time}
+      .title
+        %h3
+          = meeting.title
+      .notes
+        %p
+          %span
+            - if Time.now < meeting.starts_at
+              #{distance_of_time_in_words_to_now( meeting.starts_at )} to the meeting
+            - else
+              Meeting finished
+      .links
+        - if signed_in?
+          = link_to "Show", meeting
+          - if admin?
+            = link_to "Edit", meeting
+            .destroy
+              = button_to 'Destroy', meeting , :confirm => 'Are you sure?', :method => :delete

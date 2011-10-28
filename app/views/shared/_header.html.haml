@@ -1,16 +1,3 @@
 %h1 Meetings with Google
 %h3 Store your schedule to Google Calendar
-%h5 Powered by glorious Ruby on Rails :)
-%ul#menu-bar
-  %li=  link_to "Meetings", meetings_path
-  -if admin?
-    %li=  link_to "Users",    users_path
-  -if signed_in?
-    -if this_user.attends_any_meetings?
-      %li=  link_to "My meetings", {:controller => "participations", :action => "index",
-                                    :user_id  => this_user.id}
-    %li   Signed in as #{this_user.name}
-    %li=  link_to "Sign out", signout_path
-  -else
-    - if !(controller.controller_name.eql?("sessions"))
-      %li=  link_to "Sign in",  signin_path
+%h5 Powered by glorious Ruby on Rails
