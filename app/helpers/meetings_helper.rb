@@ -11,3 +11,4 @@ module MeetingsHelper
     {:controller => "participations", :action => "create", :user_as_host => host, :meeting_id => meeting.id, :user_id => session[:user_id]}
   end
 end
+

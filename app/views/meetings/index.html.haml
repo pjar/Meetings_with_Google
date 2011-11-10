@@ -2,34 +2,14 @@
 .bottom-buttons-and-links
 - if admin?
   = link_to "New Meeting", new_meeting_path
-
-
 #meetings-list
-  - @meetings.each do |meeting|
-    #meeting-box
-      .date
-        %strong
-          = meeting.meeting_date( MONTH )
-        %big
-          = meeting.meeting_date( DAY )
-        %small
-          = meeting.meeting_date( YEAR )
-      .time-span
-        #{meeting.start_time} to #{meeting.end_time}
-      .title
-        %h3
-          = meeting.title
-      .notes
-        %p
-          %span
-            - if Time.now < meeting.starts_at
-              #{distance_of_time_in_words_to_now( meeting.starts_at )} to the meeting
-            - else
-              Meeting finished
-      .links
-        - if signed_in?
-          = link_to "Show", meeting
-          - if admin?
-            = link_to "Edit", meeting
-            .destroy
-              = button_to 'Destroy', meeting , :confirm => 'Are you sure?', :method => :delete
+  =render "shared/meetings_index", :@user => @user, :@meetings => @meetings
+
+#meetings-date-nav
+  .months-nav
+    .prev
+      = link_to " << ", meetings_path( :date => @date.beginning_of_month - 1 ), :remote => true
+    .text
+      = @date.strftime("%B")
+    .next
+      = link_to " >> ", meetings_path( :date => @date.end_of_month + 1 ), :remote => true

@@ -3,7 +3,6 @@ html, body {
     padding: 0;
     font-family: Arial, Helvetica, Verdana, Sans-serif;
     color: #555555;
-
 }
 
 h1 {
@@ -13,144 +12,13 @@ h1 {
 
 input[type="submit"] {
     margin-bottom: 0;
-    border: 1;
+    border: 0;
     background-image: url("/images/orange_button.png");
 
     }
 input[type="text"] {
     background-image: url("/images/text_field_background.png")
 }
-
-
-#container {
-    width: 760px;
-    margin: auto;
-
-
-}
-
-#header {
-    height: 130px;
-    text-align: center;
-
-
-
-}
-
-
-#main-nav {
-    width: 700px;
-    text-align: center;
-
-    background-color: #ececec;
-    border: 0px;
-
-}
-#main-nav li  {
-    display:    inline;
-
-}
-
-#content {
-
- overflow: hidden;
-
-}
-
-#meetings-list {
-
-    padding: 10px;
-}
-
-
-#meeting-box {
-    height: 50px; width: 60%;
-    padding: 0 0 0 0;
-    margin-top: 10px;
-    margin-left: 65px;
-    border-radius: 5px;
-    border: solid;
-    border-width: 0.1em;
-    position: relative;
-
-}
-
-
-#meeting-box .date {
-    width: 10%; height: 97%;
-    border-radius: 5px 0 0 5px;
-    background-color: #DDDDDD;
-    text-align: center;
-    float: left;
-    line-height: 90%;
-    padding-top: 2px;
-
-}
-
-#meeting-box .date big {
-    color: #CD0000;
-    font-size: 1.5em;
-}
-
-#meeting-box .date small, .date strong {
-    font-size: 0.7em;
-    display: block;
-}
-
-#meeting-box .time-span {
-    width: 140px;
-    padding-left: 50px;
-    font-size: 0.9em;
-}
-
-#meeting-box .title {
-    width: 67%; height: 40%;
-    padding: 0px 0 10px 5px;
-    line-height: 0px;
-
-    position: absolute;
-    top: 10px; left: 43px;
-}
-
-
-#meeting-box .notes {
-    width: 67%; height: 30%;
-
-    padding: 0 0 0 0px;
-    position: absolute;
-    left: 44px; bottom: 3px;
-    font-size: 0.7em;
-
-}
-#meeting-box .notes p {
-    position: absolute;
-    left: 10px; bottom: -13px;
-}
-
-#meeting-box .notes span {
-
-    float: right;
-}
-
-#meeting-box .links {
-    line-height: 20px;
-    padding-right: 10px;
-    float: right;
-}
-
-#meeting-box .destroy {
-    position: absolute;
-    top: 10px;
-    left: -70px;
-}
-
-#footer {
-    clear: both;
-    height: 80px;
-
-
-}
-
 
 a:link, a:active, a:visited {
     color: #CD0000;
@@ -162,4 +30,209 @@ a:hover {
     color:  #ECECEC;
     background-color: #CD0000;
 }
+
+
+
+#container {
+    width: 760px;
+    margin: auto;
+}
+
+#header {
+    height: 60px;
+    text-align: center;
+}
+
+#header h3 {
+    line-height: 0.1em;
+}
+
+
+#main-nav {
+    width: 700px;
+    text-align: center;
+    background-color: #ececec;
+    border: 0px;
+}
+
+#main-nav li  {
+    display:    inline;
+}
+
+#content {
+    position: relative;
+    overflow: hidden;
+}
+
+#meetings-list {
+    padding: 10px;
+    position: relative;
+}
+
+
+.meeting-box {
+    height: 50px; width: 60%;
+    padding: 0 0 0 0;
+    margin-top: 10px;
+    margin-left: 65px;
+    border-radius: 17px;
+    border: solid;
+    border-width: 0.1em;
+    border-color:  #BBBBBB;
+    position: relative;
+}
+
+
+.meeting-box .date {
+    width: 10%; height: 97%;
+    border-radius: 17px 0 0 17px;
+    background-color: #DDDDDD;
+    text-align: center;
+    float: left;
+    line-height: 90%;
+    padding-top: 2px;
+}
+
+.meeting-box .date big {
+    color: #CD0000;
+    font-size: 1.5em;
+}
+
+.meeting-box .date small, .date strong {
+    font-size: 0.7em;
+    display: block;
+}
+
+.meeting-box .time-span {
+    width: 140px;
+    padding-left: 50px;
+    font-size: 0.9em;
+}
+
+.meeting-box .title {
+    width: 67%; height: 40%;
+    padding: 0px 0 10px 5px;
+    line-height: 0px;
+    position: absolute;
+    top: 8px; left: 44px;
+}
+
+
+.meeting-box .notes {
+    width: 67%; height: 30%;
+    padding: 0 0 0 0px;
+    position: absolute;
+    left: 44px; bottom: 3px;
+    font-size: 0.7em;
+}
+
+.meeting-box .notes p {
+    position: absolute;
+    left: 10px; bottom: -13px;
+}
+
+.meeting-box .notes span {
+    float: right;
+}
+
+.meeting-box .links {
+    width: 27%; height: 100%;
+    position: relative;
+    top: -17px;
+    left: 2px;
+    float: right;
+    font-size: 0.8em;
+}
+
+.meeting-box .links a {
+    display: block;
+    height: 34px;
+    padding-top: 16px;
+    text-align: center;
+    border-left: 1px;
+    border-left-style: solid;
+    border-left-color: #BBBBBB;
+    background-color: #DDDDDD;
+}
+
+.meeting-box .links a:hover {
+     background-color: #CD0000;
+
+}
+
+.meeting-box .links .first {
+
+    width: 38%;
+    float: left;
+}
+
+.meeting-box .links .second {
+    width: 33%;
+    float: left;
+}
+
+
+.meeting-box .links .third {
+    width: 28%;
+    float: left;
+}
+
+.meeting-box .links .second-big {
+    width: 61%;
+    float: left;
+}
+
+.meeting-box .links .third .second-big {
+    border-radius: 0 17px 17px 0;
+}
+
+.meeting-box .links  .third a, .third a:hover, .second-big a, .second-big a:hover {
+    border-radius: 0 17px 17px 0;
+}
+
+.meeting-box .destroy {
+    position: absolute;
+    top: 10px;
+    left: -70px;
+}
+
+#meetings-date-nav .months-nav {
+    position: absolute;
+    width: 150px;
+    top: 0px;
+    right: 80px;
+    display: inline;
+}
+
+.months-nav .prev {
+}
+
+.months-nav .next {
+}
+
+.months-nav .text {
+    height: 25px;
+    text-align: center;
+    width: 90px;
+    padding-top: 6px;
+}
+
+.months-nav .prev, .months-nav .next {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+
+.months-nav .text, .months-nav .prev, .months-nav .next {
+    float: left;
+
+}
+
+
+
+#footer {
+    clear: both;
+    height: 80px;
+}
+
 

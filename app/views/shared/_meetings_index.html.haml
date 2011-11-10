@@ -1,0 +1,26 @@
+- @meetings.each do |meeting|
+  .meeting-box
+    .date
+      %strong
+        = meeting.meeting_date( MONTH )
+      %big
+        = meeting.meeting_date( DAY )
+      %small
+        = meeting.meeting_date( YEAR )
+    .time-span
+      #{meeting.start_time} to #{meeting.end_time}
+    .title
+      %h3
+        = meeting.title
+    .notes
+      %p
+        %span
+          - if Time.now < meeting.starts_at
+            #{distance_of_time_in_words_to_now( meeting.starts_at )} to the meeting
+          - else
+            Meeting finished
+    .links
+      - if regular_user?
+        = render "meetings/partials/links_for_user", :meeting => meeting, :@user => @user
+      - if admin?
+        = render "meetings/partials/links_for_admin", :meeting => meeting

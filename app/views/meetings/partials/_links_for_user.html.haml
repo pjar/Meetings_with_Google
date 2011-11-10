@@ -1,0 +1,18 @@
+
+-if @user.already_participates(meeting)
+  .first
+    = link_to "Show", meeting_or_participation( meeting )
+  .second-big
+    = link_to "Resign", {:controller => "participations", :action => "destroy",
+                                      :meeting_id => meeting.id, :user_id => @user.id}, :method => :delete
+-else
+  .first
+    = link_to "Show", meeting_or_participation(meeting)
+  -if meeting.has_no_host?
+    .second
+      = link_to "Attend", participation_params( meeting, false )
+    .third
+      = link_to "Host", participation_params( meeting, true )
+  -else
+    .second-big
+      = link_to "Attend", participation_params( meeting, false )

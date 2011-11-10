@@ -1,37 +1,12 @@
-%h1 Listing meetings
+%h1 Your meetings
 
-%table
-  %tr
-    %th
-    %th Meeting time
-    %th
-    %th Title
-    %th Place
-    %th Tutor
-    %th Places
-    %th
-    %th
-    %th
-  -# TODO: DRY it out (duplication with meetings and participations index)
-  - @meetings.each do |meeting|
-    %tr
-      %td #{meeting.meeting_date}
-      %td #{meeting.start_time} to #{meeting.end_time}
-      %td
-      %td= meeting.title
-      %td= meeting.place
-      -if meeting.has_no_host?
-        %td
-      -else
-        %td= meeting.host.name
-      %td= meeting.available_places
-      - if signed_in?
-        %td= link_to 'Show', meeting_or_participation(meeting)
-        -if @user.already_participates(meeting)
-          %td= button_to  "Resign", {:controller => "participations", :action => "destroy",
-                                    :meeting_id => meeting.id, :user_id => @user.id }, :method => :delete
-        -else
-          -if meeting.has_free_places?
-            %td= link_to  'Attend', participation_params(meeting, false)
-          -if meeting.has_no_host?
-            %td= button_to 'Host', participation_params(meeting, true)
+#meetings-list
+  =render "shared/meetings_index", :@user => @user, :@meetings => @meetings
+#meetings-date-nav
+  .months-nav
+    .prev
+      = link_to " << ", participations_path( :date => @date.beginning_of_month - 1 ), :remote => true
+    .text
+      = @date.strftime("%B")
+    .next
+      = link_to " >> ", participations_path( :date => @date.end_of_month + 1 ), :remote => true

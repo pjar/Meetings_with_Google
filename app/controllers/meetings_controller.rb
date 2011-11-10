@@ -1,19 +1,24 @@
 class MeetingsController < ApplicationController
 
+
+
   before_filter :authorize_admin, :except  => [:index, :show]
 
   # GET /meetings
   # GET /meetings.xml
   def index
-    @meetings = Meeting.all_active.order("starts_at ASC")
+    @date = params[:date] ? Date.parse(params[:date]) : Date.today
+    @meetings ||= Meeting.ordered.by_month( @date )
     if signed_in?
       @user = User.find(session[:user_id])
     end
 
     respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @meetings }
+      format.html
+      format.xml { render :xml => @metings }
+      format.js
     end
+
   end
 
   # GET /meetings/1
@@ -38,7 +43,7 @@ class MeetingsController < ApplicationController
     end
   end
 
-# POST /meetings
+  # POST /meetings
   # POST /meetings.xml
   def create
     @meeting = Meeting.new_meeting(params[:meeting])

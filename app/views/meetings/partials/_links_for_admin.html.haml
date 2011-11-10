@@ -1,0 +1,6 @@
+.first
+  = link_to "Show", meeting_or_participation(meeting)
+.second
+  = link_to "Edit", [:edit, meeting]
+.third
+  = link_to "X", meeting, :confirm => "Are you sure?", :method => :delete

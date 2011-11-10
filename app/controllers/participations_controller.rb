@@ -36,7 +36,10 @@ class ParticipationsController < ApplicationController
   def index
     if signed_in?
       @user = User.find(session[:user_id])
-      @meetings = @user.meetings.all_active
+     #@meetings = @user.meetings.all_active
+      @date = params[:date] ? Date.parse(params[:date]) : Date.today
+      @participations = Participation.where( :user_id => @user )
+      @meetings ||= @user.meetings.all_active.ordered.by_month( @date )
     else
       respond_to do |format|
 
@@ -54,6 +57,15 @@ class ParticipationsController < ApplicationController
       format.html { redirect_to meetings_path}
       format.xml  { head :ok}
     end
+  end
+
+  def update
+    @participation = Participation.find_participation( params[:meeting_id], params[:user_id] )
+
+  end
+
+  def show
+    puts "dupa"
   end
 
 end

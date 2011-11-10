@@ -12,3 +12,15 @@ $(function() {
    $("#meeting_end_time").timeEntry( {show24Hours: true, timeSteps: [1, 10]} );
 });
 
+$(function() {
+    var original_state = $(".title").css("background-color");
+    $(".meeting-box").hover(
+
+        function(){
+            $(this).css("background-color", "#DDDDDD");
+        },
+        function(){
+            $(this).css("background-color", original_state);
+        }
+    )
+});

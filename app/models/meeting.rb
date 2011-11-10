@@ -44,6 +44,10 @@ class Meeting < ActiveRecord::Base
 
   scope :all_needing_update, where("deleted = ? OR up_to_date_with_google = ?", true, false)
 
+  scope :ordered, order("starts_at ASC")
+
+  scope :by_month, lambda { |date| { :conditions => { :starts_at => date.beginning_of_month..date.end_of_month} } }
+
   validate  :dates_cannot_collide
   validate  :cannot_end_before_start
 

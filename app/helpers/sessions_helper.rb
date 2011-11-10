@@ -10,6 +10,12 @@ module SessionsHelper
     !session[:user_id].nil?
   end
 
+  def regular_user?
+    unless session[:user_id].nil?
+      !User.find(session[:user_id]).name.eql?("Admin")
+    end
+  end
+
   def admin?
     if session[:user_id].nil?
       false

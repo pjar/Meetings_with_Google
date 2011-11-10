@@ -1,0 +1,17 @@
+$("#meetings-list").html("<%= escape_javascript(render("shared/meetings_index")) %>");
+$("#meetings-date-nav .text").html("<%= @date.strftime("%B") %>");
+$("#meetings-date-nav .months-nav .prev a").attr("href", "/meetings?date=<%= @date.beginning_of_month - 1 %>  ");
+$("#meetings-date-nav .months-nav .next a").attr("href", "/meetings?date=<%= @date.end_of_month + 1 %>  ");
+
+$("#meetings-list").parent().delegate(".meeting-box", "hover", function() {
+    var original_state = $(".title").css("background-color");
+        $(".meeting-box").hover(
+
+            function(){
+                $(this).css("background-color", "#DDDDDD");
+            },
+            function(){
+                $(this).css("background-color", original_state);
+            }
+        )
+    });
